@@ -1,9 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-
+import { useState } from "react";
 import Link from "next/link";
-
 import {
   Avatar,
   AvatarFallback,
@@ -19,22 +17,24 @@ import {
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
 import { Sheet, SheetContent } from "@/app/components/ui/sheet";
-import { NavItems } from "@/app/config/NavItems";
 import { Menu } from "lucide-react";
+import { SidebarItems } from "../config/SidebarItems";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 export default function Header() {
-  const navItems = NavItems();
+  const { data } = useSession();
+  const sidebarItems = SidebarItems();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="flex h-16 shrink-0 items-center justify-between border-b px-4 md:px-6">
+    <header className="flex h-16 shrink-0 items-center justify-between border-b px-4 sm:hidden md:px-6">
       <Link
         href="#"
         className="flex items-center gap-2 text-lg font-semibold md:text-base"
         prefetch={false}
       >
-        <span className="h-8 w-8 rounded-full border bg-accent" />
-        <span>Acme Inc</span>
+        <Image src={"/images/logo.svg"} alt={"Logo"} width={100} height={100} />
       </Link>
 
       <div className="ml-4 flex items-center gap-3">
@@ -71,20 +71,20 @@ export default function Header() {
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetContent side="right" className="block md:hidden">
             <div className="flex h-fit w-full flex-col gap-1 overflow-y-auto pt-4">
-              {navItems.map((navItem, idx) => (
+              {sidebarItems.map((item, idx) => (
                 <Link
                   key={idx}
-                  href={navItem.href}
+                  href={item.href}
                   onClick={() => setIsOpen(false)}
                   className={`relative flex h-full items-center whitespace-nowrap rounded-md ${
-                    navItem.active
+                    item.active
                       ? "font-base bg-neutral-200 text-sm text-neutral-700 shadow-sm dark:bg-neutral-800 dark:text-white"
                       : "text-neutral-500 hover:bg-neutral-200 hover:text-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
                   }`}
                 >
                   <div className="font-base relative flex flex-row items-center space-x-2 rounded-md px-2 py-1.5 text-sm duration-100">
-                    {navItem.icon}
-                    <span>{navItem.name}</span>
+                    {item.icon}
+                    <span>{item.name}</span>
                   </div>
                 </Link>
               ))}

@@ -23,12 +23,5 @@ export const SidebarItems = () => {
       active: isActive(pathname, "/dashboard/leads"),
       position: "top",
     },
-    {
-      name: "Settings",
-      href: "/dashboard/settings",
-      icon: <Settings size={20} />,
-      active: isActive(pathname, "/dashboard/settings"),
-      position: "bottom",
-    },
   ];
 };

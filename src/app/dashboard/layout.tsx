@@ -8,7 +8,7 @@ export default function DashboardLayout({
 }) {
   return (
     <div>
-      {/* <Header /> */}
+      <Header />
       <div className="flex h-screen p-4">
         <Sidebar />
 

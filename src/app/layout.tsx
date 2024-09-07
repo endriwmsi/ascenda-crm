@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import ContextProvider from "@/app/components/context-provider";
+import ContextProvider from "@/app/providers/context-provider";
+import AuthProvider from "./providers/auth";
+import { RedirectProvider } from "./providers/RedirectProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,11 +20,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ContextProvider>
-          <div className="flex h-full flex-col">
-            <div>{children}</div>
-          </div>
-        </ContextProvider>
+        <AuthProvider>
+          <RedirectProvider>
+            <ContextProvider>
+              <div className="flex h-full flex-col">
+                <div>{children}</div>
+              </div>
+            </ContextProvider>
+          </RedirectProvider>
+        </AuthProvider>
       </body>
     </html>
   );
