@@ -16,18 +16,88 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    --gradient: linear-gradient(to top left, #231557, #44107a, #ff1361);
+    --background: 269 98.05% 98.42%;
+    --foreground: 269 6.1% 0.84%;
+
+    --muted: 269 6.1% 92.1%;
+    --muted-foreground: 269 3.05% 42.1%;
+
+    --popover: 269 41.2% 92.1%;
+    --popover-foreground: 269 6.1% 1.05%;
+
+    --card: 269 41.2% 92.1%;
+    --card-foreground: 269 6.1% 1.05%;
+
+    --border: 269 11.1% 89.84%;
+    --input: 269 11.1% 89.84%;
+
+    --primary: 269 61% 21%;
+    --primary-foreground: 269 1.22% 92.1%;
+
+    --secondary: 269 3.05% 96.05%;
+    --secondary-foreground: 269 4.66% 12.1%;
+
+    --accent: 269 3.05% 96.05%;
+    --accent-foreground: 269 4.66% 12.1%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --ring: 269 61% 21%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --gradient: linear-gradient(to top left, #ff057c, #8d0b93, #321575);
+
+    --background: -30 65% 4.08%;
+    --foreground: -30 10% 97.55%;
+
+    --muted: -30 50% 15.3%;
+    --muted-foreground: -30 10% 55.1%;
+
+    --popover: -30 45% 6.63%;
+    --popover-foreground: -30 10% 97.55%;
+
+    --card: -30 45% 6.63%;
+    --card-foreground: -30 10% 97.55%;
+
+    --border: -30 50% 15.3%;
+    --input: -30 50% 15.3%;
+
+    --primary: -30 100% 51%;
+    --primary-foreground: -30 10% 5.1%;
+
+    --secondary: -30 50% 15.3%;
+    --secondary-foreground: -30 10% 97.55%;
+
+    --accent: -30 50% 15.3%;
+    --accent-foreground: -30 10% 97.55%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: -30 10% 97.55%;
+
+    --ring: -30 100% 51%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
