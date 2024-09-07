@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import ContextProvider from "@/app/components/context-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,9 +18,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex h-full flex-col">
-          <div className="flex-1">{children}</div>
-        </div>
+        <ContextProvider>
+          <div className="flex h-full flex-col">
+            <div>{children}</div>
+          </div>
+        </ContextProvider>
       </body>
     </html>
   );
