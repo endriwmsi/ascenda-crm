@@ -25,6 +25,7 @@ export function ThemeToggle({ isDropDown = false }: { isDropDown?: boolean }) {
   if (!mounted) {
     return null;
   }
+
   if (isDropDown) {
     return (
       <DropdownMenu>
@@ -58,12 +59,6 @@ export function ThemeToggle({ isDropDown = false }: { isDropDown?: boolean }) {
           >
             Dark
           </DropdownMenuItem>
-          <DropdownMenuItem
-            className="cursor-pointer"
-            onClick={() => setTheme("system")}
-          >
-            System
-          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     );
@@ -76,7 +71,7 @@ export function ThemeToggle({ isDropDown = false }: { isDropDown?: boolean }) {
             theme === "light"
               ? "rounded-full bg-neutral-200"
               : "bg-transparent",
-            "p-1",
+            "p-2",
           )}
           onClick={() => setTheme("light")}
         >
@@ -85,20 +80,8 @@ export function ThemeToggle({ isDropDown = false }: { isDropDown?: boolean }) {
 
         <button
           className={cn(
-            theme === "system"
-              ? "rounded-full bg-neutral-200 dark:bg-neutral-700"
-              : "bg-transparent",
-            "p-1",
-          )}
-          onClick={() => setTheme("system")}
-        >
-          <Monitor size={18} className="stroke-1" />
-        </button>
-
-        <button
-          className={cn(
             theme === "dark" ? "rounded-full bg-neutral-700" : "bg-transparent",
-            "p-1",
+            "p-2",
           )}
           onClick={() => setTheme("dark")}
         >

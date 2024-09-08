@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import ContextProvider from "@/app/providers/context-provider";
-import AuthProvider from "./providers/auth";
-import { RedirectProvider } from "./providers/RedirectProvider";
+import AppProviders from "./providers/app-providers";
+import LPHeader from "./components/lp/LPHeader";
+import Footer from "./components/lp/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,17 +18,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <AuthProvider>
-          <RedirectProvider>
-            <ContextProvider>
-              <div className="flex h-full flex-col">
-                <div>{children}</div>
-              </div>
-            </ContextProvider>
-          </RedirectProvider>
-        </AuthProvider>
+        <AppProviders>
+          <main className="grow scroll-smooth">{children}</main>
+        </AppProviders>
       </body>
     </html>
   );

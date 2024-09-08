@@ -1,4 +1,4 @@
-import PagePlaceholder from "../components/page-placeholder";
+import PagePlaceholder from "../components/lp/page-placeholder";
 
 export default function Dashboard() {
   return (

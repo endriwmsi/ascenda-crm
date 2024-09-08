@@ -1,15 +1,6 @@
 "use client";
 
 import { Button } from "@/app/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/app/components/ui/dialog";
-import { LogInIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -21,11 +12,11 @@ const Login = () => {
   const { data } = useSession();
   const handleLoginWithGoogle = () => signIn("google");
 
-  useEffect(() => {
-    if (data?.user) {
-      router.push("/dashboard");
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data?.user) {
+  //     router.push("/dashboard");
+  //   }
+  // }, [data]);
 
   return (
     <div>
