@@ -1,35 +1,35 @@
-"use client";
+// "use client";
 
-import { useSession } from "next-auth/react";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, createContext, ReactNode } from "react";
+// import { useSession } from "next-auth/react";
+// import { usePathname, useRouter } from "next/navigation";
+// import { useEffect, createContext, ReactNode } from "react";
 
-interface RedirectProviderProps {
-  isAuthenticated: boolean;
-}
+// interface RedirectProviderProps {
+//   isAuthenticated: boolean;
+// }
 
-const Provider = createContext<RedirectProviderProps | undefined>(undefined);
+// const Provider = createContext<RedirectProviderProps | undefined>(undefined);
 
-export const RedirectProvider = ({ children }: { children: ReactNode }) => {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-  const pathname = usePathname();
+// export const RedirectProvider = ({ children }: { children: ReactNode }) => {
+//   const { data: session, status } = useSession();
+//   const router = useRouter();
+//   const pathname = usePathname();
 
-  const isAuthenticated = !!session;
+//   const isAuthenticated = !!session;
 
-  useEffect(() => {
-    if (status !== "authenticated" && pathname.includes("/dashboard")) {
-      router.push("/");
-    }
+//   useEffect(() => {
+//     if (status !== "authenticated" && pathname.includes("/dashboard")) {
+//       router.push("/");
+//     }
 
-    if (status === "authenticated" && pathname === "/auth/login") {
-      router.push("/dashboard");
-    }
-  }, [status, router, pathname]);
+//     if (status === "authenticated" && pathname === "/auth/login") {
+//       router.push("/dashboard");
+//     }
+//   }, [status, router, pathname]);
 
-  return (
-    <Provider.Provider value={{ isAuthenticated }}>
-      {children}
-    </Provider.Provider>
-  );
-};
+//   return (
+//     <Provider.Provider value={{ isAuthenticated }}>
+//       {children}
+//     </Provider.Provider>
+//   );
+// };
