@@ -58,7 +58,7 @@
   }
 
   .dark {
-    --gradient: linear-gradient(to top left, #ff057c, #8d0b93, #321575);
+    --gradient: linear-gradient(to top left, #231557, #44107a, #ff1361);
 
     --background: -30 65% 4.08%;
     --foreground: -30 10% 97.55%;
