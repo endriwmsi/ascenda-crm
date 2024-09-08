@@ -29,7 +29,7 @@ export default function SideNav() {
   };
 
   return (
-    <div className="z-50 pr-4">
+    <div className="z-50 sm:pr-4">
       <div
         className={cn(
           isSidebarExpanded ? "w-[200px]" : "w-[68px]",

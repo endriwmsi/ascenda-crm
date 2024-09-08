@@ -5,12 +5,6 @@ import { ThemeToggle } from "../theme-toggle";
 import Logo from "../Logo";
 import { Button } from "../ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/app/components/ui/dropdown-menu";
-import {
   Sheet,
   SheetClose,
   SheetContent,
