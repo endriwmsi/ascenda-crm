@@ -15,7 +15,7 @@ const Loader = () => {
     // Escolhe uma dica aleatória do array sempre que o loader for montado
     const randomTip = tips[Math.floor(Math.random() * tips.length)];
     setCurrentTip(randomTip);
-  }, []);
+  }, [tips]);
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-card">
