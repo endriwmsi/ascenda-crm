@@ -4,11 +4,11 @@ import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, createContext, ReactNode } from "react";
 
-interface AuthContextProps {
+interface RedirectProviderProps {
   isAuthenticated: boolean;
 }
 
-const AuthContext = createContext<AuthContextProps | undefined>(undefined);
+const Provider = createContext<RedirectProviderProps | undefined>(undefined);
 
 export const RedirectProvider = ({ children }: { children: ReactNode }) => {
   const { data: session, status } = useSession();
@@ -28,8 +28,8 @@ export const RedirectProvider = ({ children }: { children: ReactNode }) => {
   }, [status, router, pathname]);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated }}>
+    <Provider.Provider value={{ isAuthenticated }}>
       {children}
-    </AuthContext.Provider>
+    </Provider.Provider>
   );
 };
