@@ -24,6 +24,8 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  hasCompletedAnamnesis Boolean @default(false)
 }
 
 model Account {
