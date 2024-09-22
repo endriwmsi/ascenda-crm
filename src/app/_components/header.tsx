@@ -6,8 +6,8 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@/app/components/ui/avatar";
-import { Button } from "@/app/components/ui/button";
+} from "@/app/_components/ui/avatar";
+import { Button } from "@/app/_components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,10 +15,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/app/components/ui/dropdown-menu";
-import { Sheet, SheetContent } from "@/app/components/ui/sheet";
+} from "@/app/_components/ui/dropdown-menu";
+import { Sheet, SheetContent } from "@/app/_components/ui/sheet";
 import { Menu } from "lucide-react";
-import { SidebarItems } from "../config/SidebarItems";
+import { SidebarItems } from "../_config/SidebarItems";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 

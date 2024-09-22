@@ -12,9 +12,9 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/app/components/ui/sheet";
+} from "@/app/_components/ui/sheet";
 import { Menu } from "lucide-react";
-import useIsMobile from "@/app/hooks/use-is-mobile-hook";
+import useIsMobile from "@/app/_hooks/use-is-mobile-hook";
 
 const LPHeader = () => {
   const isMobile = useIsMobile();

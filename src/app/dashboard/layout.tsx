@@ -1,32 +1,52 @@
 "use client";
 
-import Header from "../components/header";
-import Sidebar from "../components/sidebar";
+import Header from "../_components/header";
+import Sidebar from "../_components/sidebar";
+import Loader from "../_components/loader";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Loader from "../components/loader";
+import { checkAnamnesis } from "../_actions/check-anamnesis";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { data: session, status } = useSession();
   const router = useRouter();
+  const { data, status } = useSession();
   const [isLoading, setIsLoading] = useState(true);
+
+  const checkAnamnesisStatus = async () => {
+    if (data) {
+      try {
+        const hasCompletedAnamnesis = await checkAnamnesis({
+          userEmail: data.user!.email,
+        });
+
+        if (hasCompletedAnamnesis) {
+          router.push("/dashboard");
+        }
+
+        router.push("/anamnese");
+      } catch (error) {
+        console.error("Erro ao buscar status de anamnese:", error);
+      }
+    }
+  };
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (status === "unauthenticated") {
         router.push("/auth/login");
-      } else if (status === "authenticated") {
-        setIsLoading(false);
       }
+
+      checkAnamnesisStatus();
+      setIsLoading(false);
     }, 1000);
 
     return () => clearTimeout(timeout);
-  }, [status, router]);
+  }, [status]);
 
   if (isLoading) {
     return <Loader />;

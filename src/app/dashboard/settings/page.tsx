@@ -1,4 +1,4 @@
-import PagePlaceholder from "@/app/components/lp/page-placeholder";
+import PagePlaceholder from "@/app/_components/lp/page-placeholder";
 
 const SettignsPage = () => {
   return (

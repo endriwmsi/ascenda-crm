@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-import { cn } from "@/app/lib/utils";
-import { Monitor, Moon, Sun } from "lucide-react";
+import { cn } from "@/app/_lib/utils";
+import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
 import { Button } from "./ui/button";

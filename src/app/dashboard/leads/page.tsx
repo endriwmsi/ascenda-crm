@@ -1,5 +1,3 @@
-import PagePlaceholder from "@/app/components/lp/page-placeholder";
-
 const LeadsPage = () => {
   return (
     <div className="flex h-screen flex-1 flex-col space-y-2 overflow-y-hidden px-4 py-4 sm:h-fit">

@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
-import { cn } from "../lib/utils";
+import { cn } from "../_lib/utils";
 import { SidebarItem } from "./sidebar-item";
-import { SidebarItems } from "../config/SidebarItems";
+import { SidebarItems } from "../_config/SidebarItems";
 import { signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
