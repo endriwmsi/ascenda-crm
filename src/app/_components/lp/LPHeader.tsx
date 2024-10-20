@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ThemeToggle } from "../theme-toggle";
+import { ModeToggle } from "../ui/mode-toggle";
 import Logo from "../Logo";
 import { Button } from "../ui/button";
 import {
@@ -32,7 +32,7 @@ const LPHeader = () => {
           <div className="relative flex items-center justify-end gap-3">
             {isMobile ? (
               <>
-                <ThemeToggle isDropDown={false} />
+                <ModeToggle />
                 <Sheet>
                   <SheetTrigger>
                     <Menu size={16} />
@@ -63,7 +63,7 @@ const LPHeader = () => {
               </>
             ) : (
               <>
-                <ThemeToggle isDropDown={false} />
+                <ModeToggle />
                 <Button
                   className="rounded-full border-2 bg-transparent text-foreground"
                   variant="outline"

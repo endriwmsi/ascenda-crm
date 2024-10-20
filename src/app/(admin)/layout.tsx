@@ -1,12 +1,11 @@
 "use client";
 
-import Header from "../_components/header";
-import Sidebar from "../_components/sidebar";
 import Loader from "../_components/loader";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { checkAnamnesis } from "../_actions/check-anamnesis";
+import AdminPanelLayout from "../_components/admin-panel/admin-panel-layout";
 
 export default function DashboardLayout({
   children,
@@ -24,11 +23,11 @@ export default function DashboardLayout({
           userEmail: data.user!.email,
         });
 
-        if (hasCompletedAnamnesis) {
-          router.push("/dashboard");
+        if (!hasCompletedAnamnesis) {
+          router.push("/anamnese");
         }
 
-        router.push("/anamnese");
+        router.push("/dashboard");
       } catch (error) {
         console.error("Erro ao buscar status de anamnese:", error);
       }
@@ -52,20 +51,5 @@ export default function DashboardLayout({
     return <Loader />;
   }
 
-  return (
-    <div>
-      <Header />
-      <div className="flex h-screen p-4">
-        <Sidebar />
-
-        <div className="w-full overflow-x-auto rounded-lg bg-card p-4 shadow-lg">
-          <div className="sm:h-[calc(99vh-60px)]">
-            <div className="h-[calc(100vh - 120px)] relative mx-auto flex w-full justify-center">
-              <div className="w-full">{children}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  return <AdminPanelLayout>{children}</AdminPanelLayout>;
 }
