@@ -1,9 +1,5 @@
 import { Navbar } from "../navbar";
 
-interface ContentLayoutProps {
-  children: React.ReactNode;
-}
-
 export function ContentLayout({ children }: { children: React.ReactNode }) {
   return (
     <div>
