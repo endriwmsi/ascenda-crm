@@ -10,16 +10,16 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "@/app/_components/ui/dropdown-menu";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./ui/tooltip";
+} from "@/app/_components/ui/tooltip";
 import { Avatar } from "@radix-ui/react-avatar";
-import { Button } from "./ui/button";
-import { AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Button } from "@/app/_components/ui/button";
+import { AvatarFallback, AvatarImage } from "@/app/_components/ui/avatar";
 import { signOut, useSession } from "next-auth/react";
 
 export function UserNav() {
@@ -32,16 +32,13 @@ export function UserNav() {
         <Tooltip delayDuration={100}>
           <TooltipTrigger asChild>
             <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                className="relative h-8 w-8 rounded-full"
-              >
+              <Button variant="outline" className="h-8 w-8 rounded-full">
                 <Avatar className="h-8 w-8">
                   <AvatarImage
-                    src={data?.user?.image ?? ""}
-                    alt={data?.user?.name ?? "User"}
+                    src={data?.user?.image!}
+                    alt={data?.user?.name!}
                   />
-                  <AvatarFallback className="bg-transparent">ES</AvatarFallback>
+                  <AvatarFallback className="">ES</AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
@@ -50,18 +47,35 @@ export function UserNav() {
         </Tooltip>
       </TooltipProvider>
 
-      <DropdownMenuContent className="w-56" align="end" forceMount>
+      <DropdownMenuContent className="w-64" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">
-              {data?.user?.name}
-            </p>
-            <p className="text-xs leading-none text-muted-foreground">
-              {data?.user?.email}
-            </p>
+            <p className="text-sm font-medium leading-none">Profile</p>
           </div>
         </DropdownMenuLabel>
+
         <DropdownMenuSeparator />
+
+        <DropdownMenuLabel className="font-normal">
+          <div className="flex items-center gap-2">
+            <Avatar className="h-8 w-8">
+              <AvatarImage src={data?.user?.image!} alt={data?.user?.name!} />
+              <AvatarFallback className="bg-transparent">ES</AvatarFallback>
+            </Avatar>
+
+            <div className="flex flex-col space-y-1">
+              <p className="text-sm font-medium leading-none">
+                {data?.user?.name}
+              </p>
+              <p className="text-xs leading-none text-muted-foreground">
+                {data?.user?.email}
+              </p>
+            </div>
+          </div>
+        </DropdownMenuLabel>
+
+        <DropdownMenuSeparator />
+
         <DropdownMenuGroup>
           <DropdownMenuItem className="hover:cursor-pointer" asChild>
             <Link href="/dashboard" className="flex items-center">

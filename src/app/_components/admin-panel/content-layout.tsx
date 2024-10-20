@@ -1,4 +1,4 @@
-import { Navbar } from "../navbar";
+import { Navbar } from "./navbar";
 
 export function ContentLayout({ children }: { children: React.ReactNode }) {
   return (
