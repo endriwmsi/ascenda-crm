@@ -3,7 +3,7 @@
 import { db } from "../_lib/prisma";
 
 interface CheckAnamnesisRequest {
-  userEmail: string | null | undefined;
+  userEmail: string | undefined;
 }
 
 export const checkAnamnesis = async (params: CheckAnamnesisRequest) => {

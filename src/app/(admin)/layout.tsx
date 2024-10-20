@@ -20,7 +20,7 @@ export default function DashboardLayout({
     if (data) {
       try {
         const hasCompletedAnamnesis = await checkAnamnesis({
-          userEmail: data.user!.email,
+          userEmail: data.user!.email ?? undefined, // Ajusta null para undefined
         });
 
         if (!hasCompletedAnamnesis) {
