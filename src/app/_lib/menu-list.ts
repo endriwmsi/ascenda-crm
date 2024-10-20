@@ -38,12 +38,12 @@ export function getMenuList(pathname: string): Group[] {
           icon: LayoutGrid,
           submenus: [],
         },
-        // {
-        //   href: "/leads",
-        //   label: "Leads",
-        //   icon: LayoutGrid,
-        //   submenus: [],
-        // },
+        {
+          href: "/leads",
+          label: "Leads",
+          icon: LayoutGrid,
+          submenus: [],
+        },
       ],
     },
     {
