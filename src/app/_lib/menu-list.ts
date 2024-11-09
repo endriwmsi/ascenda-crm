@@ -2,10 +2,9 @@ import {
   Tag,
   Users,
   Settings,
-  Bookmark,
-  SquarePen,
   LayoutGrid,
   LucideIcon,
+  BotMessageSquare,
 } from "lucide-react";
 
 type Submenu = {
@@ -47,27 +46,27 @@ export function getMenuList(pathname: string): Group[] {
       ],
     },
     {
-      groupLabel: "Contents",
+      groupLabel: "Ferramentas",
       menus: [
+        // {
+        //   href: "",
+        //   label: "Posts",
+        //   icon: SquarePen,
+        //   submenus: [
+        //     {
+        //       href: "/posts",
+        //       label: "All Posts",
+        //     },
+        //     {
+        //       href: "/posts/new",
+        //       label: "New Post",
+        //     },
+        //   ],
+        // },
         {
-          href: "",
-          label: "Posts",
-          icon: SquarePen,
-          submenus: [
-            {
-              href: "/posts",
-              label: "All Posts",
-            },
-            {
-              href: "/posts/new",
-              label: "New Post",
-            },
-          ],
-        },
-        {
-          href: "/categories",
-          label: "Categories",
-          icon: Bookmark,
+          href: "/growth-advisor",
+          label: "Chatbot",
+          icon: BotMessageSquare,
         },
         {
           href: "/tags",
