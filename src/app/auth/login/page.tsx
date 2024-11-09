@@ -35,7 +35,7 @@ const Login = () => {
 
         <Button
           variant="outline"
-          className="gap-1 font-bold"
+          className="w-full gap-1 font-bold"
           onClick={handleLoginWithGoogle}
         >
           <Image

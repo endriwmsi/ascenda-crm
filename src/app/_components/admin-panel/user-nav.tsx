@@ -17,40 +17,46 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/app/_components/ui/tooltip";
-import { Avatar } from "@radix-ui/react-avatar";
 import { Button } from "@/app/_components/ui/button";
-import { AvatarFallback, AvatarImage } from "@/app/_components/ui/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/app/_components/ui/avatar";
 import { signOut, useSession } from "next-auth/react";
+import { getUserInitials } from "@/app/_lib/utils";
 
 export function UserNav() {
   const { data } = useSession();
   const handleSignOut = () => signOut();
 
+  const initials = getUserInitials(data?.user?.name);
+
   return (
     <DropdownMenu>
       <TooltipProvider disableHoverableContent>
         <Tooltip delayDuration={100}>
-          <TooltipTrigger asChild>
-            <DropdownMenuTrigger asChild>
+          <TooltipTrigger className="flex items-center" asChild>
+            <DropdownMenuTrigger>
               <Button variant="outline" className="h-8 w-8 rounded-full">
                 <Avatar className="h-8 w-8">
                   <AvatarImage
                     src={data?.user?.image!}
                     alt={data?.user?.name!}
                   />
-                  <AvatarFallback className="">ES</AvatarFallback>
+                  <AvatarFallback className="">{initials}</AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
           </TooltipTrigger>
-          <TooltipContent side="bottom">Profile</TooltipContent>
+          <TooltipContent side="bottom">Perfil</TooltipContent>
         </Tooltip>
       </TooltipProvider>
 
       <DropdownMenuContent className="w-64" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">Profile</p>
+            <p className="text-sm font-medium leading-none">Perfil</p>
           </div>
         </DropdownMenuLabel>
 

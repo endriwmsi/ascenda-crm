@@ -75,8 +75,8 @@ export default function HeroHome() {
                 data-aos="zoom-y-out"
                 data-aos-delay={300}
               >
-                Simple is a modern website builder powered by AI that changes
-                how companies create user interfaces together.
+                Um simples e moderno CRM que transforma a forma como as empresas
+                gerenciam suas suas estratégias comerciais.
               </p>
               <div
                 className="relative flex items-center justify-center gap-2"
@@ -84,11 +84,11 @@ export default function HeroHome() {
                 data-aos-delay={450}
               >
                 <Button>
-                  <Link href={"/auth/login"}>Get started</Link>
+                  <Link href={"/auth/login"}>Começar</Link>
                 </Button>
 
                 <Button variant="secondary">
-                  <Link href={"/learn"}>Learn More</Link>
+                  <Link href={"/learn"}>Saiba mais</Link>
                 </Button>
               </div>
             </div>

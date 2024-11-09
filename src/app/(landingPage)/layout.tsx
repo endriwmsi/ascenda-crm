@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import LPHeader from "../_components/lp/LPHeader";
-import Footer from "../_components/lp/footer";
+import LPHeader from "../_components/landing-page/LPHeader";
+import Footer from "../_components/landing-page/footer";
 import AOS from "aos";
 import "aos/dist/aos.css";
 

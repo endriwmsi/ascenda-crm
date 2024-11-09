@@ -30,10 +30,11 @@ export default function LargeTestimonial() {
               />
             </div>
             <p className="text-2xl font-bold text-foreground">
-              “Simple has simplified my life in more ways than one. From
-              managing my sites to{" "}
-              <em className="italic text-gray-500">keeping track of tasks</em>,
-              it's become my go-to tool for everything.”
+              “Essa plataforma transformou a maneira como gerencio meu negócio.{" "}
+              <em className="italic text-gray-500">
+                Intuitiva, prática e focada no crescimento
+              </em>
+              , – exatamente o que eu precisava!”
             </p>
             <div className="text-sm font-medium text-gray-500">
               <span className="text-gray-700">Mary Sullivan</span>{" "}

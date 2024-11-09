@@ -12,10 +12,12 @@ export default function DashboardPage() {
   return (
     <ContentLayout>
       <div className="flex h-screen flex-1 flex-col space-y-2 overflow-y-hidden py-6 sm:h-fit">
-        <div className="h-screen max-h-[600px] w-full rounded-lg bg-white p-4 shadow-lg">
+        <div className="flex h-screen max-h-[600px] w-full flex-col justify-between rounded-lg bg-white p-4 shadow-lg">
           <div className="h-screen max-h-[500px] rounded-lg bg-background px-4 py-2">
             a
           </div>
+
+          <div className="w-full rounded-lg bg-zinc-100 p-4">a</div>
         </div>
       </div>
     </ContentLayout>

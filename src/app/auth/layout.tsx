@@ -1,4 +1,5 @@
-import Image from "next/image";
+import bgImage from "./../../../public/images/abstract.jpg";
+import Logo from "../_components/Logo";
 
 export default function AuthLayout({
   children,
@@ -8,18 +9,19 @@ export default function AuthLayout({
   return (
     <div className="flex h-screen w-full items-center justify-center bg-background">
       <div className="flex h-full w-full flex-col items-center justify-center gap-16 lg:w-1/2">
-        <Image src="/images/logo.svg" alt="login" width={100} height={100} />
+        <Logo />
 
         <div className="w-full max-w-[504px] px-8">{children}</div>
       </div>
 
       <div className="hidden h-full w-1/2 items-center justify-center shadow-lg lg:flex">
-        <Image
-          src="/images/abstract.jpg"
-          alt="login"
-          height={960}
-          width={656}
-          className="relative h-full max-h-[960px] w-full max-w-[656px] select-none rounded-l-lg object-cover"
+        <div
+          className="h-screen w-full rounded-l-xl"
+          style={{
+            backgroundImage: `url(${bgImage.src})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
         />
       </div>
     </div>

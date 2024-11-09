@@ -4,9 +4,9 @@ import { Button } from "@/app/_components/ui/button";
 import { useSidebar } from "@/app/_hooks/use-sidebar";
 import { useStore } from "@/app/_hooks/use-store";
 import { cn } from "@/app/_lib/utils";
-import { PanelsTopLeft } from "lucide-react";
 import Link from "next/link";
 import { SidebarToggle } from "./sidebar-toggle";
+import Logo from "../Logo";
 
 export function Sidebar() {
   const sidebar = useStore(useSidebar, (x) => x);
@@ -35,17 +35,15 @@ export function Sidebar() {
           asChild
         >
           <Link href="/dashboard" className="flex items-center gap-2">
-            <PanelsTopLeft className="mr-1 h-6 w-6" />
-            <h1
-              className={cn(
-                "whitespace-nowrap text-lg font-bold transition-[transform,opacity,display] duration-300 ease-in-out",
-                !getOpenState()
-                  ? "hidden -translate-x-96 opacity-0"
-                  : "translate-x-0 opacity-100",
-              )}
-            >
-              Brand
-            </h1>
+            {getOpenState() ? (
+              <>
+                <Logo />
+              </>
+            ) : (
+              <>
+                <h1 className="text-bold font-bold">ASC</h1>
+              </>
+            )}
           </Link>
         </Button>
         <Menu isOpen={getOpenState()} />
