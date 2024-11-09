@@ -10,3 +10,12 @@ export const isMobile = (): boolean => {
 
   return window.innerWidth <= 768;
 };
+
+export function getUserInitials(name: string | null | undefined) {
+  if (!name) return "";
+  return name
+    .split(" ")
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
+}

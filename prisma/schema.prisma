@@ -26,6 +26,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   hasCompletedAnamnesis Boolean @default(false)
+  companyInfo           String? @db.Text
 }
 
 model Account {
