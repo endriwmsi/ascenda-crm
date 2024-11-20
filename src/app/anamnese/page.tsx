@@ -7,6 +7,8 @@ import { useSession } from "next-auth/react";
 import { saveCompanyInfo } from "../_actions/save-company-info";
 import { toast } from "../_hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { Textarea } from "../_components/ui/textarea";
+import { Button } from "../_components/ui/button";
 
 const schema = z.object({
   companyInfo: z
@@ -55,7 +57,7 @@ export default function Anamnese() {
   };
 
   return (
-    <main className="h-screen w-full p-4">
+    <main className="flex h-screen w-full flex-col items-center p-4">
       <h1 className="mb-4 text-2xl font-bold">Anamnese</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -63,24 +65,25 @@ export default function Anamnese() {
           Informações da Empresa
         </label>
 
-        <textarea
+        <Textarea
           id="companyInfo"
           rows={5}
           {...register("companyInfo")}
           className="rounded border p-2"
           placeholder="Insira informações detalhadas sobre a empresa"
         />
+
         {errors.companyInfo && (
           <p className="text-red-500">{errors.companyInfo.message}</p>
         )}
 
-        <button
+        <Button
           type="submit"
           disabled={isSubmitting}
           className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:bg-gray-400"
         >
           {isSubmitting ? "Salvando..." : "Salvar"}
-        </button>
+        </Button>
       </form>
     </main>
   );
