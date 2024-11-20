@@ -26,7 +26,30 @@ model User {
   updatedAt DateTime @updatedAt
 
   hasCompletedAnamnesis Boolean @default(false)
-  companyInfo           String? @db.Text
+
+  Company Company?
+}
+
+model Company {
+  id     String @id @default(cuid())
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
+
+  // Campos específicos da empresa
+  companyName        String
+  foundationYear     Int
+  industry           String
+  numOfEmployees     Int
+  location           String
+  mission            String
+  vision             String
+  values             String
+  productsOrServices String
+  website            String
+  description        String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Account {
