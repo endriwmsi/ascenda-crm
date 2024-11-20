@@ -11,15 +11,7 @@ const Logo = () => {
   return (
     <div className="w-[130px]">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="65 180.742 420 108.515">
-        <g
-          data-paper-data='{"isGlobalGroup":true,"bounds":{"x":65,"y":180.74248927038627,"width":420,"height":108.51502145922746}}'
-          fill="url(#a)"
-          stroke-miterlimit="10"
-          font-family="none"
-          font-weight="none"
-          font-size="none"
-          text-anchor="none"
-        >
+        <g data-paper-data='{"isGlobalGroup":true,"bounds":{"x":65,"y":180.74248927038627,"width":420,"height":108.51502145922746}}'>
           <g data-paper-data='{"isPrimaryText":true}'>
             <path
               d="m85.55 263.517-3.894 24.443H65l9.734-57.466q4.831-12.763 18.386-19.036L88 247.943h11.826l-5.985-41.604q-9.95 3.678-16.8 10.816l5.985-35.115h21.92l15.862 94.672q-7.715-7.932-18.603-13.195zm20.405 24.443-2.957-19.18q13.844 7.716 19.684 19.18z"
