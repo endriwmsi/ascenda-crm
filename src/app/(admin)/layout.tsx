@@ -26,8 +26,6 @@ export default function DashboardLayout({
         if (!hasCompletedAnamnesis) {
           router.push("/anamnese");
         }
-
-        router.push("/dashboard");
       } catch (error) {
         console.error("Erro ao buscar status de anamnese:", error);
       }
