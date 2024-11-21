@@ -37,7 +37,7 @@ export function UserNav() {
       <TooltipProvider disableHoverableContent>
         <Tooltip delayDuration={100}>
           <TooltipTrigger className="flex items-center" asChild>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild>
               <Button variant="outline" className="h-8 w-8 rounded-full">
                 <Avatar className="h-8 w-8">
                   <AvatarImage

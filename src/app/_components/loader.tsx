@@ -18,7 +18,7 @@ const Loader = () => {
   }, [tips]);
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-card">
+    <div className="inset-0 z-50 flex h-screen flex-col items-center justify-center bg-card">
       <div className="mb-4 h-16 w-16 animate-spin rounded-full border-b-4 border-t-4 border-white"></div>
       <p className="mt-4 text-center text-white">{currentTip}</p>
     </div>
