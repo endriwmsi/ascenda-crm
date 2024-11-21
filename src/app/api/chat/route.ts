@@ -44,7 +44,7 @@ export const maxDuration = 30;
 //   }
 // }
 
-export default async function POST(req: Request) {
+export async function POST(req: Request) {
   const { messages } = await req.json();
 
   const result = streamText({
