@@ -1,11 +1,23 @@
 "use client";
 
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 const Logo = () => {
   const { theme } = useTheme();
 
-  // Define as cores para o modo claro e escuro
+  const [mounted, setMounted] = useState(false);
+
+  // Garante que o tema esteja pronto
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    // Renderiza um placeholder enquanto o tema não é definido
+    return <div className="w-[130px]"></div>;
+  }
+
   const fillColor = theme === "dark" ? "#ffffff" : "#000000";
 
   return (

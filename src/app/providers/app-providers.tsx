@@ -1,4 +1,4 @@
-import ContextProvider from "./context-provider";
+import { ThemeProvider } from "./theme-provider";
 import AuthProvider from "./auth-provider";
 // import { RedirectProvider } from "./redirect-provider";
 import React from "react";
@@ -6,9 +6,9 @@ import React from "react";
 const AppProviders = ({ children }: { children: React.ReactNode }) => {
   return (
     <AuthProvider>
-      <ContextProvider>{children}</ContextProvider>
-      {/* <RedirectProvider>
-      </RedirectProvider> */}
+      <ThemeProvider attribute="class" defaultTheme="dark">
+        {children}
+      </ThemeProvider>
     </AuthProvider>
   );
 };

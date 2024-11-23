@@ -1,9 +1,32 @@
+"use client";
+
+import { useEffect } from "react";
+import { Button } from "../ui/button";
 import Image from "next/image";
 import PageIllustration from "./page-illustration";
-import { Button } from "../ui/button";
 import Link from "next/link";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+const avatars = [
+  { src: "/images/avatar-01.jpg", alt: "Avatar 01" },
+  { src: "/images/avatar-02.jpg", alt: "Avatar 02" },
+  { src: "/images/avatar-03.jpg", alt: "Avatar 03" },
+  { src: "/images/avatar-04.jpg", alt: "Avatar 04" },
+  { src: "/images/avatar-05.jpg", alt: "Avatar 05" },
+  { src: "/images/avatar-06.jpg", alt: "Avatar 06" },
+];
 
 export default function HeroHome() {
+  useEffect(() => {
+    AOS.init({
+      once: true,
+      disable: "phone",
+      duration: 300,
+      easing: "ease-out-cubic",
+    });
+  });
+
   return (
     <section className="relative">
       <PageIllustration />
@@ -17,48 +40,16 @@ export default function HeroHome() {
               data-aos="zoom-y-out"
             >
               <div className="-mx-0.5 flex justify-center -space-x-3">
-                <Image
-                  className="box-content rounded-full border-2 border-gray-50"
-                  src={"/images/avatar-01.jpg"}
-                  width={32}
-                  height={32}
-                  alt="Avatar 01"
-                />
-                <Image
-                  className="box-content rounded-full border-2 border-gray-50"
-                  src={"/images/avatar-02.jpg"}
-                  width={32}
-                  height={32}
-                  alt="Avatar 02"
-                />
-                <Image
-                  className="box-content rounded-full border-2 border-gray-50"
-                  src={"/images/avatar-03.jpg"}
-                  width={32}
-                  height={32}
-                  alt="Avatar 03"
-                />
-                <Image
-                  className="box-content rounded-full border-2 border-gray-50"
-                  src={"/images/avatar-04.jpg"}
-                  width={32}
-                  height={32}
-                  alt="Avatar 04"
-                />
-                <Image
-                  className="box-content rounded-full border-2 border-gray-50"
-                  src={"/images/avatar-05.jpg"}
-                  width={32}
-                  height={32}
-                  alt="Avatar 05"
-                />
-                <Image
-                  className="box-content rounded-full border-2 border-gray-50"
-                  src={"/images/avatar-06.jpg"}
-                  width={32}
-                  height={32}
-                  alt="Avatar 06"
-                />
+                {avatars.map((avatar, index) => (
+                  <Image
+                    key={index}
+                    className="box-content rounded-full border-2 border-gray-50"
+                    src={avatar.src}
+                    width={32}
+                    height={32}
+                    alt={avatar.alt}
+                  />
+                ))}
               </div>
             </div>
             <h1

@@ -10,6 +10,7 @@ import { saveCompanyInfo } from "../_actions/save-company-info";
 import { Input } from "../_components/ui/input";
 import { Label } from "../_components/ui/label";
 import { Button } from "../_components/ui/button";
+import { Textarea } from "../_components/ui/textarea";
 
 type CompanyInfo = z.infer<typeof companyInfoSchema>;
 
@@ -62,7 +63,7 @@ export default function Anamnese() {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-4xl rounded bg-white p-6 shadow"
+        className="w-full max-w-4xl rounded bg-primary-foreground p-6 shadow"
       >
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {fields.map(({ id, label, type }) => (
@@ -73,7 +74,7 @@ export default function Anamnese() {
                 type={type}
                 placeholder={label}
                 {...register(id as keyof CompanyInfo)}
-                className="block w-full"
+                className="mt-2 block w-full"
               />
               {errors[id as keyof CompanyInfo] && (
                 <p className="mt-1 text-sm text-red-500">
@@ -85,13 +86,14 @@ export default function Anamnese() {
         </div>
 
         <div className="mt-6">
-          <label
+          <Label
             htmlFor="description"
             className="mb-2 block text-sm font-medium"
           >
             Descrição
-          </label>
-          <textarea
+          </Label>
+
+          <Textarea
             id="description"
             {...register("description")}
             rows={4}
@@ -107,7 +109,7 @@ export default function Anamnese() {
         <Button
           type="submit"
           className="mt-6 w-full rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
-          disabled={!isValid} // Desativa o botão se o formulário não for válido
+          disabled={!isValid}
         >
           Salvar
         </Button>
