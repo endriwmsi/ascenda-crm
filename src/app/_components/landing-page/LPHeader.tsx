@@ -24,7 +24,7 @@ const LPHeader = () => {
       <div className="mx-auto max-w-6xl px-4">
         <div className="flex h-14 items-center justify-between rounded-full px-4 shadow-lg backdrop-blur-lg">
           {/* Site branding */}
-          <div className="flex">
+          <div className="bg-gradient flex">
             <Logo />
           </div>
 

@@ -45,7 +45,7 @@ export default function DashboardPage() {
 
       <div className="flex h-screen flex-1 flex-col space-y-2 overflow-y-hidden py-6 sm:h-fit">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <Card className="max-h-[180px] border-muted bg-primary-foreground dark:border-muted dark:bg-primary-foreground">
+          <Card className="max-h-[180px] border-secondary shadow-lg">
             <CardHeader>
               <CardTitle>Daily Sales</CardTitle>
             </CardHeader>
