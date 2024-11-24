@@ -6,9 +6,7 @@ import { signIn } from "next-auth/react";
 import LoginForm from "./login-form";
 import Link from "next/link";
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
-
-const LoginPage = ({ className, ...props }: UserAuthFormProps) => {
+const LoginPage = () => {
   const handleLoginWithGoogle = () =>
     signIn("google", { callbackUrl: "/dashboard" });
 
