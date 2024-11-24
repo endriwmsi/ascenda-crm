@@ -28,7 +28,12 @@ import { getUserInitials } from "@/app/_lib/utils";
 
 export function UserNav() {
   const { data } = useSession();
-  const handleSignOut = () => signOut();
+
+  const handleSignOut = () =>
+    signOut({
+      redirect: true,
+      callbackUrl: "/",
+    });
 
   const initials = getUserInitials(data?.user?.name);
 
@@ -38,7 +43,10 @@ export function UserNav() {
         <Tooltip delayDuration={100}>
           <TooltipTrigger className="flex items-center" asChild>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="h-8 w-8 rounded-full">
+              <Button
+                variant="outline"
+                className="h-8 w-8 rounded-full border-primary"
+              >
                 <Avatar className="h-8 w-8">
                   <AvatarImage
                     src={data?.user?.image!}
@@ -66,7 +74,9 @@ export function UserNav() {
           <div className="flex items-center gap-2">
             <Avatar className="h-8 w-8">
               <AvatarImage src={data?.user?.image!} alt={data?.user?.name!} />
-              <AvatarFallback className="bg-transparent">ES</AvatarFallback>
+              <AvatarFallback className="bg-transparent">
+                {initials}
+              </AvatarFallback>
             </Avatar>
 
             <div className="flex flex-col space-y-1">
@@ -102,7 +112,7 @@ export function UserNav() {
           onClick={handleSignOut}
         >
           <LogOut className="mr-3 h-4 w-4 text-muted-foreground" />
-          Sign out
+          Sair
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

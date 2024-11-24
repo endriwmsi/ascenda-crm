@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Logo from "../Logo";
+import Logo from "../ui/Logo";
 import { InstagramLogoIcon } from "@radix-ui/react-icons";
 
 export default function Footer({ border = false }: { border?: boolean }) {

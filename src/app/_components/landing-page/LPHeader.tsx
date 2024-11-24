@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ModeToggle } from "../ui/mode-toggle";
-import Logo from "../Logo";
+import Logo from "../ui/Logo";
 import { Button } from "../ui/button";
 import {
   Sheet,

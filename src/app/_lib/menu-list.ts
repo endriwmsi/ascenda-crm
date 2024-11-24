@@ -5,6 +5,7 @@ import {
   LayoutGrid,
   LucideIcon,
   BotMessageSquare,
+  UsersIcon,
 } from "lucide-react";
 
 type Submenu = {
@@ -40,7 +41,7 @@ export function getMenuList(pathname: string): Group[] {
         {
           href: "/leads",
           label: "Leads",
-          icon: LayoutGrid,
+          icon: UsersIcon,
           submenus: [],
         },
       ],

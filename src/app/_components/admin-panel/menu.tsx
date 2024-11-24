@@ -14,6 +14,7 @@ import {
   TooltipProvider,
 } from "@/app/_components/ui/tooltip";
 import { getMenuList } from "@/app/_lib/menu-list";
+import { signOut } from "next-auth/react";
 
 interface MenuProps {
   isOpen: boolean | undefined;
@@ -22,6 +23,12 @@ interface MenuProps {
 export function Menu({ isOpen }: MenuProps) {
   const pathname = usePathname();
   const menuList = getMenuList(pathname);
+
+  const handleSignOut = () =>
+    signOut({
+      redirect: true,
+      callbackUrl: "/",
+    });
 
   return (
     // <ScrollArea className="[&>div>div[style]]:!block">
@@ -116,7 +123,9 @@ export function Menu({ isOpen }: MenuProps) {
             <Tooltip delayDuration={100}>
               <TooltipTrigger asChild>
                 <Button
-                  onClick={() => {}}
+                  onClick={() => {
+                    handleSignOut;
+                  }}
                   variant="outline"
                   className="mt-5 h-10 w-full justify-center"
                 >
@@ -129,7 +138,7 @@ export function Menu({ isOpen }: MenuProps) {
                       isOpen === false ? "hidden opacity-0" : "opacity-100",
                     )}
                   >
-                    Sign out
+                    Sair
                   </p>
                 </Button>
               </TooltipTrigger>

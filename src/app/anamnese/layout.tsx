@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Loader from "../_components/loader";
+import Loader from "../_components/ui/loader";
 import { checkAnamnesis } from "../_actions/check-anamnesis";
 
 export default function AnamneseLayout({
