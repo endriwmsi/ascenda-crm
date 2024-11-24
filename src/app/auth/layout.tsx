@@ -1,6 +1,6 @@
 "use client";
 
-import Logo from "../_components/Logo";
+import Logo from "../_components/ui/Logo";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -51,17 +51,6 @@ export default function AuthLayout({
           </blockquote>
         </div>
       </div>
-
-      {/* <div className="hidden h-full w-1/2 items-center justify-center shadow-lg lg:flex">
-        <div
-          className="h-screen w-full"
-          style={{
-            backgroundImage: `url(${bgImage.src})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-      </div> */}
     </div>
   );
 }
