@@ -29,7 +29,7 @@ const Loader = () => {
         <div className="h-4 w-4 animate-bounce rounded-full bg-white [animation-delay:-0.15s]"></div>
         <div className="h-4 w-4 animate-bounce rounded-full bg-white"></div>
       </div>
-      <p className="mt-4 text-center text-sm text-gray-100">{currentTip}</p>
+      <p className="mt-4 text-center text-sm text-foreground">{currentTip}</p>
     </div>
   );
 };
