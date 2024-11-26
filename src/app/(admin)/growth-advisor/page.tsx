@@ -58,7 +58,7 @@ export default function DashboardPage() {
       <span className="text-3xl font-bold">Growth Advisor</span>
 
       <div className="flex h-screen flex-1 flex-col space-y-2 overflow-y-hidden py-6 sm:h-fit">
-        <div className="flex h-screen max-h-[600px] w-full flex-col justify-between rounded-lg bg-card p-4 shadow-lg">
+        <div className="flex h-screen max-h-[600px] w-full flex-col justify-between rounded-lg bg-accent p-4 shadow-lg">
           {/* CHAT */}
           <ScrollArea
             className="h-screen max-h-[500px] rounded-lg bg-background p-4"
