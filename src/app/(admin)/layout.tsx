@@ -4,7 +4,7 @@ import Loader from "../_components/ui/loader";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { checkAnamnesis } from "../_actions/is-answered";
+import { isAnswered } from "../_actions/is-answered";
 import AdminPanelLayout from "../_components/admin-panel/admin-panel-layout";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
@@ -12,11 +12,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const { data, status } = useSession();
   const [isLoading, setIsLoading] = useState(true);
 
-  const checkAnamnesisStatus = async () => {
+  const isAnsweredStatus = async () => {
     if (data) {
       try {
-        const hasCompletedAnamnesis = await checkAnamnesis({
-          userEmail: data.user!.email ?? undefined, // Ajusta null para undefined
+        const hasCompletedAnamnesis = await isAnswered({
+          userEmail: data.user!.email ?? undefined,
         });
 
         if (!hasCompletedAnamnesis) {
@@ -36,7 +36,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
       console.log(status);
 
-      checkAnamnesisStatus();
+      isAnsweredStatus();
       setIsLoading(false);
     }, 1000);
 
