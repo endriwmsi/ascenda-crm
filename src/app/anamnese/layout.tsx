@@ -2,58 +2,46 @@
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { isAnswered } from "../_actions/is-answered";
 import Loader from "../_components/ui/loader";
-import { checkAnamnesis } from "../_actions/check-anamnesis";
 
 export default function AnamneseLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { data, status } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
-
-  const checkAnamnesisStatus = async () => {
-    if (data) {
-      try {
-        const hasCompletedAnamnesis = await checkAnamnesis({
-          userEmail: data.user!.email ?? undefined, // Ajusta null para undefined
-        });
-
-        if (hasCompletedAnamnesis) {
-          router.push("/dashboard");
-        }
-      } catch (error) {
-        console.error("Erro ao buscar status de anamnese:", error);
-      }
-    }
-  };
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
+    const checkStatus = async () => {
       if (status === "unauthenticated") {
         router.push("/auth/login");
-      } else if (status === "authenticated") {
-        checkAnamnesisStatus();
-
-        setIsLoading(false);
+        return;
       }
-    }, 1000);
 
-    return () => clearTimeout(timeout);
-  }, [status, router]);
+      if (status === "authenticated" && session?.user?.email) {
+        try {
+          const hasCompleted = await isAnswered({
+            userEmail: session.user.email,
+          });
 
-  if (isLoading) {
+          if (hasCompleted) {
+            router.push("/dashboard");
+          }
+        } catch (error) {
+          console.error("Erro ao verificar status de anamnese:", error);
+        }
+      }
+    };
+
+    checkStatus();
+  }, [status, session?.user?.email, router]);
+
+  if (status === "loading") {
     return <Loader />;
   }
 
-  return (
-    <div>
-      <div className="flex h-screen p-4">
-        <div className="w-full">{children}</div>
-      </div>
-    </div>
-  );
+  return <div className="h-screen w-full">{children}</div>;
 }

@@ -1,119 +1,21 @@
-"use client";
-
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { companyInfoSchema } from "../_lib/company-info-schema";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { saveCompanyInfo } from "../_actions/save-company-info";
-import { Input } from "../_components/ui/input";
-import { Label } from "../_components/ui/label";
-import { Button } from "../_components/ui/button";
-import { Textarea } from "../_components/ui/textarea";
-
-type CompanyInfo = z.infer<typeof companyInfoSchema>;
-
-const fields = [
-  { id: "companyName", label: "Nome da Empresa", type: "text" },
-  { id: "foundationYear", label: "Ano de Fundação", type: "number" },
-  { id: "industry", label: "Indústria", type: "text" },
-  {
-    id: "numOfEmployees",
-    label: "Número de Funcionários",
-    type: "number",
-  },
-  { id: "location", label: "Localização", type: "text" },
-  { id: "mission", label: "Missão", type: "text" },
-  { id: "vision", label: "Visão", type: "text" },
-  { id: "values", label: "Valores", type: "text" },
-  {
-    id: "productsOrServices",
-    label: "Produtos ou Serviços",
-    type: "text",
-  },
-  { id: "website", label: "Website", type: "text" },
-];
+import CompanyInfoForm from "./company-info-form";
 
 export default function Anamnese() {
-  const router = useRouter();
-  const { data } = useSession();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm<CompanyInfo>({
-    resolver: zodResolver(companyInfoSchema),
-    mode: "onChange",
-  });
-
-  const onSubmit = async (values: CompanyInfo) => {
-    try {
-      await saveCompanyInfo({ ...values }, data?.user?.email);
-      router.push("/dashboard");
-    } catch (error) {
-      console.error("Erro ao salvar informações:", error);
-    }
-  };
-
   return (
-    <main className="flex w-full flex-col items-center justify-center">
-      <h1 className="mb-6 text-6xl font-bold">Anamnese</h1>
+    <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
+      <main className="mx-auto w-full max-w-4xl space-y-8">
+        <header className="space-y-4 text-center">
+          <h1 className="text-4xl font-bold text-foreground">
+            Antes de tudo...
+          </h1>
+          <p className="mx-auto max-w-2xl text-xl text-muted-foreground">
+            Precisamos de alguns dados sobre sua empresa, isso tornará melhor e
+            mais personalizada a sua experiência ao usar nossas ferramentas.
+          </p>
+        </header>
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-4xl rounded bg-primary-foreground p-6 shadow"
-      >
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {fields.map(({ id, label, type }) => (
-            <div key={id} className="flex flex-col">
-              <Label htmlFor={id}>{label}</Label>
-              <Input
-                id={id}
-                type={type}
-                placeholder={label}
-                {...register(id as keyof CompanyInfo)}
-                className="mt-2 block w-full"
-              />
-              {errors[id as keyof CompanyInfo] && (
-                <p className="mt-1 text-sm text-red-500">
-                  {errors[id as keyof CompanyInfo]?.message}
-                </p>
-              )}
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-6">
-          <Label
-            htmlFor="description"
-            className="mb-2 block text-sm font-medium"
-          >
-            Descrição
-          </Label>
-
-          <Textarea
-            id="description"
-            {...register("description")}
-            rows={4}
-            className="block w-full rounded border-gray-300 shadow-sm"
-          />
-          {errors.description && (
-            <p className="mt-1 text-sm text-red-500">
-              {errors.description.message}
-            </p>
-          )}
-        </div>
-
-        <Button
-          type="submit"
-          className="mt-6 w-full rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
-          disabled={!isValid}
-        >
-          Salvar
-        </Button>
-      </form>
-    </main>
+        <CompanyInfoForm />
+      </main>
+    </div>
   );
 }

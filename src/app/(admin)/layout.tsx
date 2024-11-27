@@ -4,7 +4,7 @@ import Loader from "../_components/ui/loader";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { checkAnamnesis } from "../_actions/check-anamnesis";
+import { checkAnamnesis } from "../_actions/is-answered";
 import AdminPanelLayout from "../_components/admin-panel/admin-panel-layout";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
