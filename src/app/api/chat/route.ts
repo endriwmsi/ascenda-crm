@@ -15,15 +15,9 @@ export async function POST(request: Request) {
 
       - Nome da Empresa: ${companyInfo.companyName}
       - Ano de Fundação: ${companyInfo.foundationYear}
-      - Indústria: ${companyInfo.industry}
-      - Número de Funcionários: ${companyInfo.numOfEmployees}
+      - Indústria: ${companyInfo.niche}
       - Localização: ${companyInfo.location}
       - Missão: ${companyInfo.mission}
-      - Visão: ${companyInfo.vision}
-      - Valores: ${companyInfo.values}
-      - Produtos ou Serviços: ${companyInfo.productsOrServices}
-      - Website: ${companyInfo.website}
-      - Descrição: ${companyInfo.description}
 
       Responda de maneira concisa e contextualizada, levando em consideração as informações acima.
     `.trim();
