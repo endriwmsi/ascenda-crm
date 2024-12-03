@@ -3,8 +3,8 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { isAnswered } from "../_actions/is-answered";
-import Loader from "../_components/ui/loader";
+import { isAnswered } from "../../actions/is-answered";
+import Loader from "../../components/ui/loader";
 
 export default function AnamneseLayout({
   children,

@@ -1,6 +1,5 @@
-"use client";
 import Link from "next/link";
-import { ContentLayout } from "@/app/_components/admin-panel/content-layout";
+import { ContentLayout } from "@/components/admin-panel/content-layout";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,23 +7,11 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/app/_components/ui/breadcrumb";
-
-import { useSidebar } from "@/app/_hooks/use-sidebar";
-import { useStore } from "@/app/_hooks/use-store";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/app/_components/ui/card";
+} from "@/components/ui/breadcrumb";
+import { CardStats } from "./partials/card-stats";
+import { Chart } from "./partials/chart";
 
 export default function DashboardPage() {
-  const sidebar = useStore(useSidebar, (x) => x);
-  if (!sidebar) return null;
-  const { settings, setSettings } = sidebar;
-
   return (
     <ContentLayout>
       <Breadcrumb>
@@ -41,26 +28,42 @@ export default function DashboardPage() {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <span className="text-3xl font-bold">Dashboard</span>
+      <div className="flex h-screen flex-1 flex-col space-y-2 overflow-y-hidden py-4 sm:h-fit">
+        <span className="text-3xl font-bold">Dashboard</span>
 
-      <div className="flex h-screen flex-1 flex-col space-y-2 overflow-y-hidden py-6 sm:h-fit">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <Card className="max-h-[180px] border-secondary shadow-lg">
-            <CardHeader>
-              <CardTitle>Daily Sales</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center gap-2">
-                <p className="text-2xl">$239,30</p>
-                <div className="flex items-center justify-center rounded-lg bg-gray-100/60 px-2 py-1 text-[10px]">
-                  <p className="text-green-500">30%</p>
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter>
-              <p className="text-sm">You made an extra 35,000 this daily</p>
-            </CardFooter>
-          </Card>
+        <div className="grid grid-cols-1 gap-4 pt-2 sm:grid-cols-6">
+          <CardStats
+            title="Vendas diárias"
+            value="239,30"
+            percentage="30%"
+            description="You made an extra 35,000 this daily"
+            className="col-span-2"
+          />
+          <CardStats
+            title="Vendas mensáis"
+            value="7,230.00"
+            percentage="12%"
+            description="Your monthly revenue is improving!"
+            className="col-span-2"
+          />
+          <CardStats
+            title="Vendas anuais"
+            value="85,320.00"
+            percentage="-45%"
+            description="Your yearly growth is substantial!"
+            className="col-span-2 bg-primary text-primary-foreground"
+          />
+
+          <div className="col-span-3">
+            <Chart
+              title="Total Earnings"
+              period="Janeiro 2021 - Janeiro 2022"
+            />
+          </div>
+
+          <div className="col-span-3 grid gap-5">
+            <div>{/* <DataTable /> */}</div>
+          </div>
         </div>
       </div>
     </ContentLayout>

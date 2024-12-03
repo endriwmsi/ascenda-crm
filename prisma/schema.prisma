@@ -13,9 +13,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum CustomerStatus {
+  NEW_LEAD
+  ACTIVE
+  INACTIVE
+  PROSPECT
+
+  @@map("customer_status")
+}
+
 enum TransactionType {
   INCOME
-  EXPENSE
+  OUTCOME
+
+  @@map("transaction_type")
 }
 
 model Account {
@@ -37,6 +48,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([provider, providerAccountId])
+  @@map("accounts")
 }
 
 model Session {
@@ -47,6 +59,8 @@ model Session {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("sessions")
 }
 
 model VerificationToken {
@@ -55,6 +69,7 @@ model VerificationToken {
   expires    DateTime
 
   @@id([identifier, token])
+  @@map("verification_tokens")
 }
 
 model User {
@@ -73,6 +88,8 @@ model User {
   isAnswered Boolean @default(false)
 
   Company Company?
+
+  @@map("users")
 }
 
 model Company {
@@ -92,6 +109,8 @@ model Company {
   Transactions Transaction[]
   Employees    Employee[]
   Customers    Customer[]
+
+  @@map("companies")
 }
 
 model Transaction {
@@ -105,6 +124,8 @@ model Transaction {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("transactions")
 }
 
 model Employee {
@@ -119,18 +140,22 @@ model Employee {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("employees")
 }
 
 model Customer {
-  id        String  @id @default(cuid())
-  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  id        String         @id @default(cuid())
+  company   Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId String
   name      String
   email     String?
   phone     String?
-  isLead    Boolean @default(true)
+  status    CustomerStatus @default(NEW_LEAD)
   notes     String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("customers")
 }

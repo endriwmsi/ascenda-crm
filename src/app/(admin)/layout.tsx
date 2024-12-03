@@ -1,11 +1,11 @@
 "use client";
 
-import Loader from "../_components/ui/loader";
+import Loader from "../../components/ui/loader";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { isAnswered } from "../_actions/is-answered";
-import AdminPanelLayout from "../_components/admin-panel/admin-panel-layout";
+import { isAnswered } from "../../actions/is-answered";
+import AdminPanelLayout from "../../components/admin-panel/admin-panel-layout";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
@@ -15,11 +15,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const isAnsweredStatus = async () => {
     if (data) {
       try {
-        const hasCompletedAnamnesis = await isAnswered({
+        const hasDoneCompanyInfo = await isAnswered({
           userEmail: data.user!.email ?? undefined,
         });
 
-        if (!hasCompletedAnamnesis) {
+        if (!hasDoneCompanyInfo) {
           router.push("/anamnese");
         }
       } catch (error) {
@@ -33,8 +33,6 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       if (status === "unauthenticated") {
         router.push("/auth/login");
       }
-
-      console.log(status);
 
       isAnsweredStatus();
       setIsLoading(false);

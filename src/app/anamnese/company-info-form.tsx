@@ -3,8 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { saveCompanyInfo } from "../_actions/save-company-info";
-import { Button } from "../_components/ui/button";
+import { saveCompanyInfo } from "../../actions/save-company-info";
+import { Button } from "../../components/ui/button";
 import {
   Form,
   FormControl,
@@ -12,8 +12,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../_components/ui/form";
-import { Input } from "../_components/ui/input";
+} from "../../components/ui/form";
+import { Input } from "../../components/ui/input";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { z } from "zod";
@@ -23,10 +23,10 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../_components/ui/card";
-import { Textarea } from "../_components/ui/textarea";
-import { Icons } from "../_components/ui/icons";
-import { companySchema } from "../_lib/constants";
+} from "../../components/ui/card";
+import { Textarea } from "../../components/ui/textarea";
+import { Icons } from "../../components/ui/icons";
+import { companySchema } from "../../lib/constants";
 
 const CompanyInfoForm = () => {
   const router = useRouter();

@@ -1,11 +1,7 @@
 "use client";
 
-import { ContentLayout } from "@/app/_components/admin-panel/content-layout";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/app/_components/ui/avatar";
+import { ContentLayout } from "@/components/admin-panel/content-layout";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -13,25 +9,20 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/app/_components/ui/breadcrumb";
-import { Button } from "@/app/_components/ui/button";
-import { ScrollArea } from "@/app/_components/ui/scroll-area";
+} from "@/components/ui/breadcrumb";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { useChat } from "ai/react";
 import { SendHorizonalIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
-export default function DashboardPage() {
-  // const sidebar = useStore(useSidebar, (x) => x);
-  // if (!sidebar) return null;
-  // const { settings, setSettings } = sidebar;
-
+const GrowtAdvisorPage = () => {
   const { data: session } = useSession();
   const ref = useRef<HTMLDivElement>(null);
-  const [companyInfo, setCompanyInfo] = useState<any>(null);
-
   const { messages, input, handleInputChange, handleSubmit } = useChat();
 
   useEffect(() => {
@@ -57,11 +48,11 @@ export default function DashboardPage() {
 
       <span className="text-3xl font-bold">Growth Advisor</span>
 
-      <div className="flex h-screen flex-1 flex-col space-y-2 overflow-y-hidden py-6 sm:h-fit">
-        <div className="flex h-screen max-h-[600px] w-full flex-col justify-between rounded-lg bg-accent p-4 shadow-lg">
+      <div className="flex flex-1 flex-col space-y-2 overflow-y-hidden py-6 sm:h-fit">
+        <div className="flex w-full flex-col justify-between rounded-xl border bg-background p-6 shadow-lg">
           {/* CHAT */}
           <ScrollArea
-            className="h-screen max-h-[500px] rounded-lg bg-background p-4"
+            className="h-screen max-h-[600px] rounded-xl border bg-zinc-50 p-4 dark:bg-zinc-900/20"
             ref={ref}
           >
             {messages.map((message) => (
@@ -73,7 +64,10 @@ export default function DashboardPage() {
               >
                 {message.role === "assistant" && (
                   <Avatar className="mr-2">
-                    <AvatarImage src="/path-to-ai-avatar.png" alt="AI Avatar" />
+                    <AvatarImage
+                      src="@/../public/images/avatar-01.jpg"
+                      alt="AI Avatar"
+                    />
                     <AvatarFallback>AI</AvatarFallback>
                   </Avatar>
                 )}
@@ -81,7 +75,7 @@ export default function DashboardPage() {
                 <div
                   className={`max-w-[75%] rounded-xl p-3 text-sm ${
                     message.role === "user"
-                      ? "bg-blue-500 text-white"
+                      ? "bg-background text-foreground"
                       : "bg-gray-200 text-black"
                   }`}
                 >
@@ -102,13 +96,10 @@ export default function DashboardPage() {
           </ScrollArea>
 
           {/* INPUT */}
-          <div className="flex items-center gap-2">
-            <form
-              className="w-full rounded-lg bg-background p-4"
-              onSubmit={handleSubmit}
-            >
-              <input
-                className="w-full overflow-y-scroll bg-transparent focus:outline-none"
+          <div className="mt-2 flex items-center gap-2">
+            <form className="w-full" onSubmit={handleSubmit}>
+              <Input
+                className="overflow-y-scroll bg-transparent focus:outline-none"
                 value={input}
                 placeholder="Digite algo..."
                 onChange={handleInputChange}
@@ -123,4 +114,6 @@ export default function DashboardPage() {
       </div>
     </ContentLayout>
   );
-}
+};
+
+export default GrowtAdvisorPage;

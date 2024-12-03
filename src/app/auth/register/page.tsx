@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/app/_components/ui/button";
-import { Icons } from "@/app/_components/ui/icons";
+import { Button } from "@/components/ui/button";
+import { Icons } from "@/components/ui/icons";
 import Link from "next/link";
 import RegisterForm from "./register-form";
 import { signIn } from "next-auth/react";
