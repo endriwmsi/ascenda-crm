@@ -1,10 +1,10 @@
 "use client";
 
-import Logo from "@/components/ui/logo";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import bgImage from "./../../../public/images/abstract.jpg";
+import Logo from "@/components/ui/logo";
 
 export default function AuthLayout({
   children,

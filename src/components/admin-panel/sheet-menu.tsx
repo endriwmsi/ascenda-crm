@@ -9,7 +9,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import Logo from "@/components/ui/logo";
+import Logo from "../ui/logo";
 
 export function SheetMenu() {
   return (

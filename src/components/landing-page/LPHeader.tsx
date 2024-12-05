@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { ModeToggle } from "../ui/mode-toggle";
-import Logo from "@/components/ui/logo";
 import { Button } from "../ui/button";
 import {
   Sheet,
@@ -15,6 +14,7 @@ import {
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import useIsMobile from "@/hooks/use-is-mobile-hook";
+import Logo from "../ui/logo";
 
 const LPHeader = () => {
   const isMobile = useIsMobile();
