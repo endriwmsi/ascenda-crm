@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { InstagramLogoIcon } from "@radix-ui/react-icons";
+import Logo from "../ui/logo";
 
 export default function Footer({ border = false }: { border?: boolean }) {
   return (
@@ -11,7 +12,9 @@ export default function Footer({ border = false }: { border?: boolean }) {
         >
           {/* 1st block */}
           <div className="space-y-2 sm:col-span-12 lg:col-span-4">
-            <div>{/* <Logo /> */} a</div>
+            <div>
+              <Logo />
+            </div>
             <div className="text-sm text-gray-600">
               Ascenda CRM é uma plataforma projetada para impulsionar o
               crescimento de pequenas empresas, simplificando a gestão e
