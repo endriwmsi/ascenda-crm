@@ -41,12 +41,12 @@ export function getMenuList(pathname: string): Group[] {
         },
         {
           href: "/leads",
-          label: "Leads",
+          label: "Clientes",
           icon: UsersIcon,
           submenus: [],
         },
         {
-          href: "/financeiro",
+          href: "/financial",
           label: "Financeiro",
           icon: CoinsIcon,
           submenus: [],
