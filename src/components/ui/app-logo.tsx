@@ -3,18 +3,16 @@
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
-const Logo = () => {
+const AppLogo = () => {
   const { theme } = useTheme();
 
   const [mounted, setMounted] = useState(false);
 
-  // Garante que o tema esteja pronto
   useEffect(() => {
     setMounted(true);
   }, []);
 
   if (!mounted) {
-    // Renderiza um placeholder enquanto o tema não é definido
     return <div className="w-[130px]"></div>;
   }
 
@@ -67,4 +65,4 @@ const Logo = () => {
   );
 };
 
-export default Logo;
+export default AppLogo;

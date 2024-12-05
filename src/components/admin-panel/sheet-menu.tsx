@@ -9,7 +9,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import Logo from "../ui/logo";
+import AppLogo from "../ui/app-logo";
 
 export function SheetMenu() {
   return (
@@ -27,7 +27,7 @@ export function SheetMenu() {
             asChild
           >
             <Link href="/dashboard" className="flex items-center gap-2">
-              <Logo />
+              <AppLogo />
             </Link>
           </Button>
         </SheetHeader>

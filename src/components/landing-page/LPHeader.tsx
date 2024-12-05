@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import useIsMobile from "@/hooks/use-is-mobile-hook";
-import Logo from "../ui/logo";
+import AppLogo from "../ui/app-logo";
 
 const LPHeader = () => {
   const isMobile = useIsMobile();
@@ -25,7 +25,7 @@ const LPHeader = () => {
         <div className="flex h-14 items-center justify-between rounded-full px-4 shadow-lg backdrop-blur-lg">
           {/* Site branding */}
           <div className="flex">
-            <Logo />
+            <AppLogo />
           </div>
 
           {/* Links for desktop and mobile */}
