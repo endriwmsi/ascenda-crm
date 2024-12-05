@@ -4,7 +4,6 @@ import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import bgImage from "./../../../public/images/abstract.jpg";
-import Logo from "@/components/ui/logo";
 
 export default function AuthLayout({
   children,
@@ -37,7 +36,7 @@ export default function AuthLayout({
         />
 
         <div className="relative z-20 flex items-center justify-end text-lg font-medium">
-          <Logo />
+          {/* <Logo /> */} a
         </div>
 
         <div className="relative z-20 mt-auto">

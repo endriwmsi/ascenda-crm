@@ -6,7 +6,6 @@ import { useStore } from "@/hooks/use-store";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { SidebarToggle } from "./sidebar-toggle";
-import Logo from "../ui/logo";
 
 export function Sidebar() {
   const sidebar = useStore(useSidebar, (x) => x);
@@ -36,9 +35,7 @@ export function Sidebar() {
         >
           <Link href="/dashboard" className="flex items-center gap-2">
             {getOpenState() ? (
-              <>
-                <Logo />
-              </>
+              <>{/* <Logo /> */}a</>
             ) : (
               <>
                 <h1 className="text-bold font-bold">ASC</h1>
