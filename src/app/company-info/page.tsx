@@ -1,6 +1,6 @@
 import CompanyInfoForm from "./company-info-form";
 
-export default function Anamnese() {
+const CompanyInfo = () => {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
       <main className="mx-auto w-full max-w-4xl space-y-8">
@@ -18,4 +18,6 @@ export default function Anamnese() {
       </main>
     </div>
   );
-}
+};
+
+export default CompanyInfo;

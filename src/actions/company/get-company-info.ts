@@ -1,4 +1,4 @@
-import { db } from "../lib/prisma";
+import { db } from "@/lib/prisma";
 import { getUserEmail } from "@/actions/get-user-email";
 
 export async function getCompanyInfo() {

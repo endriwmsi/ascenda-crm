@@ -1,8 +1,8 @@
 "use server";
 
+import { companySchema } from "@/lib/constants";
+import { db } from "@/lib/prisma";
 import { z } from "zod";
-import { db } from "../lib/prisma";
-import { companySchema } from "../lib/constants";
 
 type companySchema = z.infer<typeof companySchema>;
 
