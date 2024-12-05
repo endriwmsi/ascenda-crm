@@ -9,9 +9,14 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { CardStats } from "./partials/card-stats";
-import { Chart } from "./partials/chart";
+import { getTransactionStats } from "@/actions/transactions/get-transactions-stats";
+import { getChartTransactions } from "@/actions/transactions/get-chart-transactions";
+import Chart from "./partials/chart";
 
-export default function DashboardPage() {
+const DashboardPage = async () => {
+  const stats = await getTransactionStats();
+  const chartData = await getChartTransactions();
+
   return (
     <ContentLayout>
       <Breadcrumb>
@@ -33,29 +38,30 @@ export default function DashboardPage() {
 
         <div className="grid grid-cols-1 gap-4 pt-2 sm:grid-cols-6">
           <CardStats
-            title="Vendas diárias"
-            value="239,30"
-            percentage="30%"
-            description="You made an extra 35,000 this daily"
+            title="Receita semanal"
+            value={stats.weeklyRevenue}
+            percentage={stats.weeklyChange}
+            description="Comparação com a semana passada"
             className="col-span-2"
           />
           <CardStats
-            title="Vendas mensáis"
-            value="7,230.00"
-            percentage="12%"
-            description="Your monthly revenue is improving!"
+            title="Receita mensal"
+            value={stats.monthlyRevenue}
+            percentage={stats.monthlyChange}
+            description="Comparação com o mês passado"
             className="col-span-2"
           />
           <CardStats
-            title="Vendas anuais"
-            value="85,320.00"
-            percentage="-45%"
-            description="Your yearly growth is substantial!"
+            title="Receita anual"
+            value={stats.yearlyRevenue}
+            percentage={stats.yearlyChange}
+            description="Comparação com o ano passado"
             className="col-span-2 bg-primary text-primary-foreground"
           />
 
           <div className="col-span-3">
             <Chart
+              data={chartData}
               title="Total Earnings"
               period="Janeiro 2021 - Janeiro 2022"
             />
@@ -68,4 +74,6 @@ export default function DashboardPage() {
       </div>
     </ContentLayout>
   );
-}
+};
+
+export default DashboardPage;

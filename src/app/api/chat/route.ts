@@ -1,4 +1,4 @@
-import { getCompanyInfo } from "@/actions/get-company-info";
+import { getCompanyInfo } from "@/actions/company/get-company-info";
 import { openai } from "@ai-sdk/openai";
 import { streamText } from "ai";
 export const dynamic = "force-dynamic";

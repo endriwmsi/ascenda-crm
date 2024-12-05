@@ -1,7 +1,7 @@
 "use client";
 
 import { TrendingUp } from "lucide-react";
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 
 import {
   Card,
@@ -17,43 +17,43 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { cn } from "@/lib/utils";
+import { cn, formatCurrency } from "@/lib/utils";
 
 type ChartProps = {
-  // data: any[];
+  data: { month: string; sellsCount: number; sellsValue: number }[];
   title: string;
   period: string;
   className?: string;
 };
 
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-];
-
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  sellsCount: {
+    label: "Vendas: ",
     color: "hsl(var(--chart-1))",
+  },
+  sellsValue: {
+    label: "Total: ",
+    color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig;
 
-export function Chart({ title, period, className }: ChartProps) {
+const Chart = ({ data, title, period, className }: ChartProps) => {
+  const formattedData = data.map((item) => ({
+    ...item,
+    formattedSellsValue: formatCurrency(item.sellsValue),
+  }));
+
   return (
     <Card className={cn(className)}>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
-        <CardDescription>{period}</CardDescription>
+        <CardDescription>Último ano</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
           <LineChart
             accessibilityLayer
-            data={chartData}
+            data={formattedData}
             margin={{
               left: 12,
               right: 12,
@@ -65,16 +65,23 @@ export function Chart({ title, period, className }: ChartProps) {
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
             />
+            <YAxis tickLine={false} />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
             <Line
-              dataKey="desktop"
-              type="natural"
-              stroke="var(--color-desktop)"
+              dataKey="sellsCount"
+              type="monotone"
+              stroke={chartConfig.sellsCount.color}
+              strokeWidth={2}
+              dot={false}
+            />
+            <Line
+              dataKey="sellsValue"
+              type="monotone"
+              stroke={chartConfig.sellsValue.color}
               strokeWidth={2}
               dot={false}
             />
@@ -86,9 +93,11 @@ export function Chart({ title, period, className }: ChartProps) {
           Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+          Showing total sales and revenue for the current year
         </div>
       </CardFooter>
     </Card>
   );
-}
+};
+
+export default Chart;

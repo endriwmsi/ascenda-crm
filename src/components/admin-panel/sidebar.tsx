@@ -6,7 +6,7 @@ import { useStore } from "@/hooks/use-store";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { SidebarToggle } from "./sidebar-toggle";
-import Logo from "../ui/Logo";
+import Logo from "../ui/logo";
 
 export function Sidebar() {
   const sidebar = useStore(useSidebar, (x) => x);

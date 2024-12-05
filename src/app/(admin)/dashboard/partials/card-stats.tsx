@@ -5,11 +5,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { cn, formatCurrency } from "@/lib/utils";
 
 type CardStatsProps = {
   title: string;
-  value: string;
+  value: number;
   percentage?: string;
   description: string;
   className?: string;
@@ -29,7 +29,7 @@ export function CardStats({
       </CardHeader>
       <CardContent>
         <div className="flex items-center gap-2">
-          <p className="text-2xl">R${value}</p>
+          <p className="text-2xl">{formatCurrency(value)}</p>
           <div
             className={cn(
               "flex items-center justify-center rounded-lg px-2 py-0.5 text-[10px]",
