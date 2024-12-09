@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Icons } from "@/components/ui/icons";
-import { companySchema } from "@/lib/constants";
+import { companySchema } from "@/lib/schemas";
 
 const CompanyInfoForm = () => {
   const router = useRouter();
