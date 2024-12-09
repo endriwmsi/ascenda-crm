@@ -11,30 +11,19 @@ import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
+import { registerSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const formSchema = z.object({
-  email: z.string().email().min(2, {
-    message: "Você deve fornecer um e-mail válido.",
-  }),
-  name: z.string().min(2, {
-    message: "O Nome deve ter pelo menos 6 caracteres.",
-  }),
-  password: z.string().min(8, {
-    message: "A senha deve ter pelo menos 8 caracteres.",
-  }),
-});
-
 const RegisterForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       email: "",
       name: "",
@@ -42,7 +31,7 @@ const RegisterForm = () => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof registerSchema>) => {
     setIsLoading(true);
 
     const response = await fetch("/api/auth/register", {
@@ -83,7 +72,7 @@ const RegisterForm = () => {
                     <Input
                       {...field}
                       id="email"
-                      placeholder="name@example.com"
+                      placeholder="nome@exemplo.com"
                       type="email"
                       autoComplete="email"
                       disabled={isLoading}

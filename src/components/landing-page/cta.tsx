@@ -8,7 +8,7 @@ export default function Cta() {
     <section>
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div
-          className="relative overflow-hidden rounded-2xl text-center shadow-xl before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:rounded-2xl before:bg-gray-900"
+          className="relative overflow-hidden rounded-2xl text-center shadow-xl before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:rounded-2xl dark:bg-zinc-950"
           data-aos="zoom-y-out"
         >
           {/* Glow */}
@@ -32,13 +32,16 @@ export default function Cta() {
             />
           </div>
           <div className="px-4 py-12 md:px-12 md:py-20">
-            <h2 className="mb-6 border-y text-3xl font-bold text-gray-200 [border-image:linear-gradient(to_right,transparent,theme(colors.slate.700/.7),transparent)1] md:mb-12 md:text-4xl">
+            <h2 className="mb-6 border-y text-3xl font-bold text-foreground [border-image:linear-gradient(to_right,transparent,theme(colors.slate.700/.7),transparent)1] md:mb-12 md:text-4xl">
               Impulsione o crescimento do seu negócio com simplicidade.
               Experimente agora!
             </h2>
             <div className="mx-auto max-w-xs sm:flex sm:max-w-none sm:justify-center">
-              <Button>
-                <Link href={"/auth/login"}>Começar</Link>
+              <Button
+                variant="default"
+                className="shadow-[0px_0px_12px_#575757] dark:shadow-white"
+              >
+                <Link href={"/auth/login"}>Começar agora</Link>
               </Button>
             </div>
           </div>

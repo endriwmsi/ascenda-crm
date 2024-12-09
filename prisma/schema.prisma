@@ -14,10 +14,8 @@ datasource db {
 }
 
 enum CustomerStatus {
-  NEW_LEAD
   ACTIVE
   INACTIVE
-  PROSPECT
 
   @@map("customer_status")
 }
@@ -27,6 +25,23 @@ enum TransactionType {
   OUTCOME
 
   @@map("transaction_type")
+}
+
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+
+  @@map("task_status")
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+
+  @@map("task_priority")
 }
 
 model Account {
@@ -73,28 +88,48 @@ model VerificationToken {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id String @id @default(cuid())
+
   name          String?
   email         String    @unique
   emailVerified DateTime?
   password      String?
   image         String?
-  accounts      Account[]
-  sessions      Session[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   isAnswered Boolean @default(false)
 
-  Company Company?
+  Task     Task[]
+  Company  Company?
+  accounts Account[]
+  sessions Session[]
 
   @@map("users")
 }
 
+model Task {
+  id     String @id @default(cuid())
+  userId String
+
+  title       String
+  description String?
+  status      TaskStatus   @default(PENDING)
+  priority    TaskPriority @default(MEDIUM)
+  category    String?
+  dueDate     DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("tasks")
+}
+
 model Company {
   id     String @id @default(cuid())
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique
 
   companyName    String
@@ -106,21 +141,23 @@ model Company {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   Transactions Transaction[]
-  Employees    Employee[]
   Customers    Customer[]
 
   @@map("companies")
 }
 
 model Transaction {
-  id          String          @id @default(cuid())
+  id        String @id @default(cuid())
+  companyId String
+
   name        String
-  companyId   String
-  type        TransactionType
   description String?
   amount      Float
   date        DateTime        @default(now())
+  type        TransactionType
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -130,31 +167,18 @@ model Transaction {
   @@map("transactions")
 }
 
-model Employee {
-  id        String    @id @default(cuid())
-  company   Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  companyId String
-  name      String
-  role      String
-  salary    Float
-  startDate DateTime
-  endDate   DateTime?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("employees")
-}
-
 model Customer {
-  id        String         @id @default(cuid())
-  company   Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  id        String @id @default(cuid())
   companyId String
-  name      String
-  email     String
-  phone     String
-  status    CustomerStatus @default(NEW_LEAD)
-  notes     String?
+
+  name        String
+  email       String
+  phoneNumber String
+  description String         @default("-")
+  birthDate   DateTime       @default(now())
+  status      CustomerStatus @default(ACTIVE)
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

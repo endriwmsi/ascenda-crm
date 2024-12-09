@@ -1,5 +1,5 @@
 import Image from "next/image";
-import TestimonialImg from "@/../public/images/large-testimonial.jpg";
+import TestimonialImg from "@/../public/images/large-testimonial.png";
 
 export default function LargeTestimonial() {
   return (
@@ -37,10 +37,10 @@ export default function LargeTestimonial() {
               , – exatamente o que eu precisava!”
             </p>
             <div className="text-sm font-medium text-gray-500">
-              <span className="text-gray-700">Mary Sullivan</span>{" "}
+              <span className="text-gray-700">Valéria Cunha</span>{" "}
               <span className="text-gray-400">/</span>{" "}
               <a className="text-primary" href="#0">
-                CTO at Microsoft
+                Proprietária da Inovi Celulares
               </a>
             </div>
           </div>

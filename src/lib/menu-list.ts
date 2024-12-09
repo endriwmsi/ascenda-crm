@@ -1,7 +1,4 @@
 import {
-  Tag,
-  Users,
-  Settings,
   LayoutGrid,
   LucideIcon,
   BotMessageSquare,
@@ -40,7 +37,7 @@ export function getMenuList(pathname: string): Group[] {
           submenus: [],
         },
         {
-          href: "/leads",
+          href: "/customers",
           label: "Clientes",
           icon: UsersIcon,
           submenus: [],
@@ -76,27 +73,27 @@ export function getMenuList(pathname: string): Group[] {
           label: "Chatbot",
           icon: BotMessageSquare,
         },
-        {
-          href: "/tags",
-          label: "Tags",
-          icon: Tag,
-        },
+        // {
+        //   href: "/tags",
+        //   label: "Tags",
+        //   icon: Tag,
+        // },
       ],
     },
-    {
-      groupLabel: "Settings",
-      menus: [
-        {
-          href: "/users",
-          label: "Users",
-          icon: Users,
-        },
-        {
-          href: "/account",
-          label: "Account",
-          icon: Settings,
-        },
-      ],
-    },
+    // {
+    //   groupLabel: "Settings",
+    //   menus: [
+    //     {
+    //       href: "/users",
+    //       label: "Users",
+    //       icon: Users,
+    //     },
+    //     {
+    //       href: "/account",
+    //       label: "Account",
+    //       icon: Settings,
+    //     },
+    //   ],
+    // },
   ];
 }

@@ -11,6 +11,7 @@ import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
+import { loginSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -18,26 +19,19 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const formSchema = z.object({
-  email: z.string().email("Você deve inserir um e-mail válido."),
-  password: z.string().min(8, {
-    message: "A senha deve ter pelo menos 8 caracteres.",
-  }),
-});
-
 const LoginForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     setIsLoading(true);
 
     try {
@@ -81,7 +75,7 @@ const LoginForm = () => {
                     <Input
                       {...field}
                       id="email"
-                      placeholder="name@example.com"
+                      placeholder="nome@exemplo.com"
                       type="email"
                       autoComplete="email"
                       disabled={isLoading}

@@ -1,20 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { ModeToggle } from "../ui/mode-toggle";
 import { Button } from "../ui/button";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
 import useIsMobile from "@/hooks/use-is-mobile-hook";
 import AppLogo from "../ui/app-logo";
+import { ModeToggle } from "../ui/mode-toggle";
 
 const LPHeader = () => {
   const isMobile = useIsMobile();
@@ -22,7 +12,7 @@ const LPHeader = () => {
   return (
     <header className="fixed top-2 z-30 w-full md:top-6">
       <div className="mx-auto max-w-6xl px-4">
-        <div className="flex h-14 items-center justify-between rounded-full px-4 shadow-lg backdrop-blur-lg">
+        <div className="flex h-16 items-center justify-between rounded-xl border border-white/10 px-4 shadow-lg backdrop-blur-sm">
           {/* Site branding */}
           <div className="flex">
             <AppLogo />
@@ -30,9 +20,8 @@ const LPHeader = () => {
 
           {/* Links for desktop and mobile */}
           <div className="relative flex items-center justify-end gap-3">
-            {isMobile ? (
+            {/* {isMobile ? (
               <>
-                <ModeToggle />
                 <Sheet>
                   <SheetTrigger>
                     <Menu size={16} />
@@ -63,18 +52,24 @@ const LPHeader = () => {
               </>
             ) : (
               <>
-                <ModeToggle />
                 <Button
                   className="rounded-full border-2 bg-transparent text-foreground"
-                  variant="outline"
+                  variant="default"
                 >
                   <Link href={"/auth/login"}>Entrar</Link>
                 </Button>
-                <Button className="rounded-full">
-                  <Link href={"/auth/register"}>Registrar-se</Link>
-                </Button>
               </>
-            )}
+            )} */}
+
+            <div className="flex items-center justify-between gap-2">
+              <ModeToggle />
+              <Button
+                variant="default"
+                className="shadow-[0px_0px_12px_#575757] dark:shadow-white"
+              >
+                <Link href={"/auth/login"}>Começar agora</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </div>

@@ -7,6 +7,7 @@ import PageIllustration from "./page-illustration";
 import Link from "next/link";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { useTheme } from "next-themes";
 
 const avatars = [
   { src: "/images/avatar-01.jpg", alt: "Avatar 01" },
@@ -18,6 +19,11 @@ const avatars = [
 ];
 
 export default function HeroHome() {
+  const { theme } = useTheme();
+
+  const previewImage =
+    theme === "dark" ? "/images/preview-dark.png" : "/images/preview-white.png";
+
   useEffect(() => {
     AOS.init({
       once: true,
@@ -74,12 +80,11 @@ export default function HeroHome() {
                 data-aos="zoom-y-out"
                 data-aos-delay={450}
               >
-                <Button>
-                  <Link href={"/auth/login"}>Começar</Link>
-                </Button>
-
-                <Button variant="secondary">
-                  <Link href={"/learn"}>Saiba mais</Link>
+                <Button
+                  variant="default"
+                  className="shadow-[0px_0px_12px_#575757] dark:shadow-white"
+                >
+                  <Link href={"/auth/login"}>Começar agora</Link>
                 </Button>
               </div>
             </div>
@@ -94,9 +99,9 @@ export default function HeroHome() {
             <div className="relative rounded-2xl shadow-xl before:pointer-events-none before:absolute before:-inset-5 before:border-y before:[border-image:linear-gradient(to_right,transparent,theme(colors.slate.300/.8),transparent)1] after:absolute after:-inset-5 after:-z-10 after:border-x after:[border-image:linear-gradient(to_bottom,transparent,theme(colors.slate.300/.8),transparent)1]">
               <Image
                 className="h-auto w-auto rounded-2xl"
-                src={"/images/preview.png"}
-                width={800}
-                height={500}
+                src={previewImage}
+                width={1000}
+                height={600}
                 alt="Hero image"
                 priority
               />
