@@ -29,7 +29,7 @@ export function CardStats({
       </CardHeader>
       <CardContent>
         <div className="flex items-center gap-2">
-          <p className="text-2xl">{formatCurrency(value)}</p>
+          <p className="text-xl sm:text-2xl">{formatCurrency(value)}</p>
           <div
             className={cn(
               "flex items-center justify-center rounded-lg px-2 py-0.5 text-[10px]",

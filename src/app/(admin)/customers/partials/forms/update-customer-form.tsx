@@ -17,9 +17,27 @@ import { useSession } from "next-auth/react";
 import { z } from "zod";
 import { Textarea } from "@/components/ui/textarea";
 import { Icons } from "@/components/ui/icons";
-import { customerSchema } from "@/lib/constants";
+import { customerSchema } from "@/lib/schemas";
 import { updateCustomer } from "@/actions/customers/update-customer";
-import { Customer } from "../table/columns";
+import { PhoneInput } from "@/components/admin-panel/phone-input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { CalendarIcon } from "lucide-react";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Customer } from "@/app/types/constants";
 
 type UpdateCustomerFormProps = {
   customer: Customer;
@@ -29,14 +47,17 @@ type UpdateCustomerFormProps = {
 const UpdateCustomerForm = ({ onSave, customer }: UpdateCustomerFormProps) => {
   const { data } = useSession();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const form = useForm<z.infer<typeof customerSchema>>({
     resolver: zodResolver(customerSchema),
     defaultValues: {
       name: customer.name,
       email: customer.email,
-      phone: customer.phone,
-      notes: customer.notes ?? "",
+      phoneNumber: customer.phoneNumber,
+      status: customer.status,
+      description: customer.description,
+      birthDate: customer.birthDate,
     },
   });
 
@@ -96,14 +117,51 @@ const UpdateCustomerForm = ({ onSave, customer }: UpdateCustomerFormProps) => {
         />
         <FormField
           control={form.control}
-          name="phone"
+          name="phoneNumber"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Telefone</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Ex: (11) 98765-4321"
-                  className="p-3 text-lg"
+                <PhoneInput {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="status"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Status*</FormLabel>
+              <FormControl>
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="ACTIVE">ATIVO</SelectItem>
+                    <SelectItem value="INACTIVE">INATIVO</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Descrição</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Adicione os produtos ou serviços que o cliente comprou."
+                  className="resize-none p-3 text-lg"
+                  rows={5}
                   {...field}
                 />
               </FormControl>
@@ -113,18 +171,39 @@ const UpdateCustomerForm = ({ onSave, customer }: UpdateCustomerFormProps) => {
         />
         <FormField
           control={form.control}
-          name="notes"
+          name="birthDate"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Notas</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Adicione quaisquer notas sobre o cliente"
-                  className="resize-none p-3 text-lg"
-                  rows={5}
-                  {...field}
-                />
-              </FormControl>
+            <FormItem className="flex flex-col">
+              <FormLabel>Data de nascimento*</FormLabel>
+              <Popover open={isOpen} onOpenChange={setIsOpen}>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={"outline"}
+                      className={cn(!field.value && "text-muted-foreground")}
+                    >
+                      {field.value ? (
+                        format(field.value, "PPP", { locale: ptBR })
+                      ) : (
+                        <span>Escolha uma data</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    captionLayout="dropdown"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    onDayClick={() => setIsOpen(false)}
+                    fromYear={1900}
+                    toYear={new Date().getFullYear()}
+                    defaultMonth={field.value}
+                  />
+                </PopoverContent>
+              </Popover>
               <FormMessage />
             </FormItem>
           )}

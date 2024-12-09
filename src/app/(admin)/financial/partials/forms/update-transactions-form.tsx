@@ -34,9 +34,9 @@ import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { toast } from "@/hooks/use-toast";
-import { financeSchema } from "@/lib/constants";
-import { Transaction } from "../table/columns";
+import { financeSchema } from "@/lib/schemas";
 import { updateTransaction } from "@/actions/transactions/update-transaction";
+import { Transaction } from "@/app/types/constants";
 
 type UpdateTransactionsFormProps = {
   transaction: Transaction;

@@ -2,8 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import NewTransactionModal from "./modals/new-transaction-modal";
 import CreateTransactionsForm from "./forms/create-transactions-form";
+import Modal from "@/components/ui/modal";
 
 const FinanceComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,14 +19,14 @@ const FinanceComponent = () => {
         Nova Transação
       </Button>
 
-      <NewTransactionModal
+      <Modal
         title="Adicionar nova transação"
         description="Preencha os campos abaixo para adicionar uma nova transação."
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       >
         <CreateTransactionsForm onSave={() => setIsOpen(false)} />
-      </NewTransactionModal>
+      </Modal>
     </div>
   );
 };

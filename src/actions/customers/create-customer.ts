@@ -1,19 +1,18 @@
 "use server";
 
-import { customerSchema } from "@/lib/constants";
+import { authOptions } from "@/lib/auth";
+import { customerSchema } from "@/lib/schemas";
 import { db } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
-type customerSchema = z.infer<typeof customerSchema>;
+export const createCustomer = async (data: z.infer<typeof customerSchema>) => {
+  const session = await getServerSession(authOptions);
 
-export const createCustomer = async (
-  data: customerSchema,
-  userEmail: string,
-) => {
   try {
     const user = await db.user.findUnique({
-      where: { email: userEmail },
+      where: { email: session?.user.email },
     });
 
     const company = await db.company.findUnique({
@@ -26,19 +25,21 @@ export const createCustomer = async (
 
     const customer = await db.customer.create({
       data: {
+        companyId: company.id,
         name: data.name,
         email: data.email,
-        phone: data.phone,
-        notes: data.notes || null,
-        companyId: company.id,
+        phoneNumber: data.phoneNumber,
+        status: data.status,
+        birthDate: data.birthDate,
+        description: data.description,
       },
     });
+
+    revalidatePath("/leads");
 
     return customer;
   } catch (error) {
     console.error("Erro ao salvar o cliente:", error);
     throw new Error("Erro ao salvar o cliente no banco de dados.");
-  } finally {
-    revalidatePath("/leads");
   }
 };

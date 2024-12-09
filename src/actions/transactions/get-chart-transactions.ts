@@ -44,19 +44,28 @@ export const getChartTransactions = async () => {
   // Pré-popular dados para todos os meses do ano atual
   const monthlyData = Array.from({ length: 12 }, (_, i) => ({
     month: new Date(0, i).toLocaleString("pt-BR", { month: "short" }),
-    sellsCount: 0,
-    sellsValue: 0,
+    incomeCount: 0,
+    outcomeCount: 0,
   }));
 
-  // Agregar transações por mês
+  // Agregar transações por tipo e mês
   transactions.forEach((transaction) => {
     const transactionDate = new Date(transaction.date);
     if (transactionDate.getFullYear() === now.getFullYear()) {
       const monthIndex = transactionDate.getMonth();
-      monthlyData[monthIndex].sellsCount += 1;
-      monthlyData[monthIndex].sellsValue += transaction.amount;
+
+      if (transaction.type === "INCOME") {
+        monthlyData[monthIndex].incomeCount += 1;
+      } else if (transaction.type === "OUTCOME") {
+        monthlyData[monthIndex].outcomeCount += 1;
+      }
     }
   });
 
-  return monthlyData;
+  // Filtrar apenas os meses que possuem transações
+  const filteredMonthlyData = monthlyData.filter(
+    (data) => data.incomeCount > 0 || data.outcomeCount > 0,
+  );
+
+  return filteredMonthlyData;
 };

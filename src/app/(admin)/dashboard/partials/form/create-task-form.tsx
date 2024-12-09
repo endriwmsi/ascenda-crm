@@ -1,11 +1,20 @@
 "use client";
 
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useSession } from "next-auth/react";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { CalendarIcon } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Calendar } from "@/components/ui/calendar";
 import { Icons } from "@/components/ui/icons";
+import { cn } from "@/lib/utils";
 import {
   Form,
   FormControl,
@@ -14,8 +23,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { CurrencyInput } from "@/components/admin-panel/currency-input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
+import { taskSchemma } from "@/lib/schemas";
+import { createTask } from "@/actions/tasks/create-task";
 import {
   Select,
   SelectContent,
@@ -23,53 +38,46 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import { cn } from "@/lib/utils";
-import { CalendarIcon } from "lucide-react";
-import { Calendar } from "@/components/ui/calendar";
 import { toast } from "@/hooks/use-toast";
-import { financeSchema } from "@/lib/schemas";
-import { TransactionType } from "@prisma/client";
-import { createTransaction } from "@/actions/transactions/create-transaction";
 
-type CreateTransactionsFormProps = {
+type CreateTaskFormProps = {
   onSave: () => void;
 };
 
-const CreateTransactionsForm = ({ onSave }: CreateTransactionsFormProps) => {
+const CreateTaskForm = ({ onSave }: CreateTaskFormProps) => {
+  const { data } = useSession();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  const form = useForm<z.infer<typeof financeSchema>>({
-    resolver: zodResolver(financeSchema),
+  const form = useForm<z.infer<typeof taskSchemma>>({
+    resolver: zodResolver(taskSchemma),
     defaultValues: {
-      name: "",
-      description: "",
-      amount: 0,
-      type: TransactionType.INCOME,
-      date: new Date(),
+      title: "",
+      description: "-",
+      status: "PENDING",
+      priority: "MEDIUM",
+      category: "-",
+      dueDate: new Date(),
     },
+    mode: "onChange",
   });
 
-  const onSubmit = async (values: z.infer<typeof financeSchema>) => {
+  const onSubmit = async (values: z.infer<typeof taskSchemma>) => {
     setIsLoading(true);
     try {
-      await createTransaction(values);
-    } catch (error) {
+      if (!data?.user?.email) {
+        throw new Error("Usuário não autenticado ou e-mail não disponível.");
+      }
+
+      await createTask(values);
+
       toast({
-        description: `Erro ao salvar informações:, ${error}`,
+        description: "Tarefa criada com sucesso!",
       });
+    } catch (error) {
+      console.error("Erro ao salvar informações:", error);
     } finally {
       setIsLoading(false);
-      toast({
-        description: "Transação criada com sucesso!",
-      });
       onSave();
     }
   };
@@ -79,33 +87,15 @@ const CreateTransactionsForm = ({ onSave }: CreateTransactionsFormProps) => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormControl>
-              <FormItem>
-                <FormLabel>Nome da transação*</FormLabel>
-                <Input
-                  placeholder="Ex: Computador novo..."
-                  className="p-3 text-lg"
-                  {...field}
-                />
-                <FormMessage />
-              </FormItem>
-            </FormControl>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="amount"
+          name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Valor da transação*</FormLabel>
+              <FormLabel>Titulo</FormLabel>
               <FormControl>
-                <CurrencyInput
-                  placeholder="Ex: R$1.000,00"
+                <Input
+                  placeholder="Ex: João Silva"
                   className="p-3 text-lg"
-                  onValueChange={(value) => field.onChange(value)}
-                  value={field.value || 0}
+                  {...field}
                 />
               </FormControl>
               <FormMessage />
@@ -114,10 +104,28 @@ const CreateTransactionsForm = ({ onSave }: CreateTransactionsFormProps) => {
         />
         <FormField
           control={form.control}
-          name="type"
+          name="category"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Tipo*</FormLabel>
+              <FormLabel>Categoria</FormLabel>
+              <FormControl>
+                <Input
+                  type="category"
+                  placeholder="Ex: joao@email.com"
+                  className="p-3 text-lg"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="priority"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Prioridade*</FormLabel>
               <FormControl>
                 <Select onValueChange={field.onChange} value={field.value}>
                   <FormControl>
@@ -126,8 +134,10 @@ const CreateTransactionsForm = ({ onSave }: CreateTransactionsFormProps) => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="INCOME">Receita</SelectItem>
-                    <SelectItem value="OUTCOME">Despesa</SelectItem>
+                    <SelectItem value="LOW">Baixa</SelectItem>
+                    <SelectItem value="MEDIUM">Media</SelectItem>
+                    <SelectItem value="HIGH">Alta</SelectItem>
+                    <SelectItem value="URGENT">Urgente</SelectItem>
                   </SelectContent>
                 </Select>
               </FormControl>
@@ -137,10 +147,28 @@ const CreateTransactionsForm = ({ onSave }: CreateTransactionsFormProps) => {
         />
         <FormField
           control={form.control}
-          name="date"
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Descrição*</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Descreva a tarefa"
+                  className="resize-none p-3 text-lg"
+                  rows={5}
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="dueDate"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Data da transação*</FormLabel>
+              <FormLabel>Data de vencimento*</FormLabel>
               <Popover open={isOpen} onOpenChange={setIsOpen}>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -174,23 +202,6 @@ const CreateTransactionsForm = ({ onSave }: CreateTransactionsFormProps) => {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormControl>
-              <FormItem>
-                <FormLabel>Descrição</FormLabel>
-                <Input
-                  placeholder="Ex: Para trabalho..."
-                  className="p-3 text-lg"
-                  {...field}
-                />
-                <FormMessage />
-              </FormItem>
-            </FormControl>
-          )}
-        />
         <Button type="submit" className="w-full py-6 text-lg">
           {isLoading ? (
             <>
@@ -206,4 +217,4 @@ const CreateTransactionsForm = ({ onSave }: CreateTransactionsFormProps) => {
   );
 };
 
-export default CreateTransactionsForm;
+export default CreateTaskForm;

@@ -10,7 +10,7 @@ const LeadsComponent = () => {
 
   return (
     <div className="flex items-center justify-between">
-      <span className="text-3xl font-bold">Leads</span>
+      <span className="text-3xl font-bold">Clientes</span>
       <Button
         onClick={() => {
           setIsOpen(true);

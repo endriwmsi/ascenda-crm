@@ -1,7 +1,7 @@
 "use server";
 
 import { authOptions } from "@/lib/auth";
-import { financeSchema } from "@/lib/constants";
+import { financeSchema } from "@/lib/schemas";
 import { db } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";

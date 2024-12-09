@@ -1,16 +1,16 @@
 "use server";
 
 import { authOptions } from "@/lib/auth";
-import { customerSchema } from "@/lib/constants";
+import { customerSchema } from "@/lib/schemas";
 import { db } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
-type CustomerSchema = z.infer<typeof customerSchema>;
+type customerSchema = z.infer<typeof customerSchema>;
 
 export const updateCustomer = async (
-  data: { name: string; email: string; phone: string; notes?: string },
+  data: customerSchema,
   customerId: string,
 ) => {
   const session = await getServerSession(authOptions);
@@ -40,14 +40,15 @@ export const updateCustomer = async (
       throw new Error("Cliente não encontrado ou não pertence à sua empresa!");
     }
 
-    // Atualizar o cliente com os novos dados
     const updatedCustomer = await db.customer.update({
       where: { id: customerId },
       data: {
         name: data.name,
         email: data.email,
-        phone: data.phone,
-        notes: data.notes || null,
+        phoneNumber: data.phoneNumber,
+        status: data.status,
+        birthDate: data.birthDate,
+        description: data.description,
       },
     });
 

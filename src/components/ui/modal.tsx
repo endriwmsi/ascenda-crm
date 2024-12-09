@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-type NewCustomerModalProps = {
+type ModalProps = {
   title: string;
   description: string;
   isOpen?: boolean;
@@ -16,13 +16,13 @@ type NewCustomerModalProps = {
   children?: React.ReactNode;
 };
 
-const NewCustomerModal = ({
+const Modal = ({
   title,
   description,
   isOpen,
   setIsOpen,
   children,
-}: NewCustomerModalProps) => {
+}: ModalProps) => {
   return (
     <>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -38,4 +38,4 @@ const NewCustomerModal = ({
   );
 };
 
-export default NewCustomerModal;
+export default Modal;

@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { db } from "@/lib/prisma";
 import { authOptions } from "@/lib/auth";
-import { financeSchema } from "@/lib/constants";
+import { financeSchema } from "@/lib/schemas";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 

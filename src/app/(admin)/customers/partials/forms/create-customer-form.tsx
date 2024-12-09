@@ -1,9 +1,19 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useSession } from "next-auth/react";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { CalendarIcon } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Icons } from "@/components/ui/icons";
+import { cn } from "@/lib/utils";
 import {
   Form,
   FormControl,
@@ -12,13 +22,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useSession } from "next-auth/react";
-import { z } from "zod";
-import { Textarea } from "@/components/ui/textarea";
-import { Icons } from "@/components/ui/icons";
-import { createCustomer } from "@/actions/customers/add-customer";
-import { customerSchema } from "@/lib/constants";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { PhoneInput } from "@/components/admin-panel/phone-input";
+
+import { createCustomer } from "@/actions/customers/create-customer";
+import { customerSchema } from "@/lib/schemas";
+import { Calendar } from "@/components/ui/calendar";
 
 type CreateCustomerFormProps = {
   onSave: () => void;
@@ -27,9 +40,18 @@ type CreateCustomerFormProps = {
 const CreateCustomerForm = ({ onSave }: CreateCustomerFormProps) => {
   const { data } = useSession();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const form = useForm<z.infer<typeof customerSchema>>({
     resolver: zodResolver(customerSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phoneNumber: "",
+      description: "",
+      birthDate: new Date(),
+      status: "ACTIVE",
+    },
     mode: "onChange",
   });
 
@@ -40,7 +62,7 @@ const CreateCustomerForm = ({ onSave }: CreateCustomerFormProps) => {
         throw new Error("Usuário não autenticado ou e-mail não disponível.");
       }
 
-      await createCustomer(values, data?.user.email);
+      await createCustomer(values);
     } catch (error) {
       console.error("Erro ao salvar informações:", error);
     } finally {
@@ -57,7 +79,7 @@ const CreateCustomerForm = ({ onSave }: CreateCustomerFormProps) => {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nome do Cliente</FormLabel>
+              <FormLabel>Nome do Cliente*</FormLabel>
               <FormControl>
                 <Input
                   placeholder="Ex: João Silva"
@@ -74,7 +96,7 @@ const CreateCustomerForm = ({ onSave }: CreateCustomerFormProps) => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Email*</FormLabel>
               <FormControl>
                 <Input
                   type="email"
@@ -89,14 +111,28 @@ const CreateCustomerForm = ({ onSave }: CreateCustomerFormProps) => {
         />
         <FormField
           control={form.control}
-          name="phone"
+          name="phoneNumber"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Telefone</FormLabel>
+              <FormLabel>Telefone*</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Ex: (11) 98765-4321"
-                  className="p-3 text-lg"
+                <PhoneInput {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Descrição*</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Adicione os produtos ou serviços que o cliente comprou."
+                  className="resize-none p-3 text-lg"
+                  rows={5}
                   {...field}
                 />
               </FormControl>
@@ -106,18 +142,39 @@ const CreateCustomerForm = ({ onSave }: CreateCustomerFormProps) => {
         />
         <FormField
           control={form.control}
-          name="notes"
+          name="birthDate"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Notas</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Adicione quaisquer notas sobre o cliente"
-                  className="resize-none p-3 text-lg"
-                  rows={5}
-                  {...field}
-                />
-              </FormControl>
+            <FormItem className="flex flex-col">
+              <FormLabel>Data de nascimento*</FormLabel>
+              <Popover open={isOpen} onOpenChange={setIsOpen}>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={"outline"}
+                      className={cn(!field.value && "text-muted-foreground")}
+                    >
+                      {field.value ? (
+                        format(field.value, "PPP", { locale: ptBR })
+                      ) : (
+                        <span>Escolha uma data</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    captionLayout="dropdown"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    onDayClick={() => setIsOpen(false)}
+                    fromYear={1900}
+                    toYear={new Date().getFullYear()}
+                    defaultMonth={field.value}
+                  />
+                </PopoverContent>
+              </Popover>
               <FormMessage />
             </FormItem>
           )}

@@ -1,7 +1,7 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
+import { TrendingDown, TrendingUp } from "lucide-react";
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
 import {
   Card,
@@ -17,31 +17,32 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { cn, formatCurrency } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 type ChartProps = {
-  data: { month: string; sellsCount: number; sellsValue: number }[];
+  data: { month: string; incomeCount: number; outcomeCount: number }[];
   title: string;
   period: string;
   className?: string;
 };
 
 const chartConfig = {
-  sellsCount: {
-    label: "Vendas: ",
+  incomeCount: {
+    label: "Receita: ",
     color: "hsl(var(--chart-1))",
   },
-  sellsValue: {
-    label: "Total: ",
+  outcomeCount: {
+    label: "Despesas: ",
     color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig;
 
 const Chart = ({ data, title, period, className }: ChartProps) => {
-  const formattedData = data.map((item) => ({
-    ...item,
-    formattedSellsValue: formatCurrency(item.sellsValue),
-  }));
+  const totalIncome = data.reduce((sum, item) => sum + item.incomeCount, 0);
+  const totalOutcome = data.reduce((sum, item) => sum + item.outcomeCount, 0);
+
+  const isIncomeHigher = totalIncome > totalOutcome;
+  const difference = Math.abs(totalIncome - totalOutcome);
 
   return (
     <Card className={cn(className)}>
@@ -51,50 +52,62 @@ const Chart = ({ data, title, period, className }: ChartProps) => {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <LineChart
-            accessibilityLayer
-            data={formattedData}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-            />
-            <YAxis tickLine={false} />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Line
-              dataKey="sellsCount"
-              type="monotone"
-              stroke={chartConfig.sellsCount.color}
-              strokeWidth={2}
-              dot={false}
-            />
-            <Line
-              dataKey="sellsValue"
-              type="monotone"
-              stroke={chartConfig.sellsValue.color}
-              strokeWidth={2}
-              dot={false}
-            />
-          </LineChart>
+          {data.length === 0 ? (
+            <div className="flex h-full flex-col items-center justify-center text-muted-foreground">
+              <p className="text-lg font-medium">Nenhum dado disponível</p>
+              <p>Faça uma transação para visualizar o gráfico.</p>
+            </div>
+          ) : (
+            <BarChart accessibilityLayer data={data}>
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey="month"
+                tickLine={false}
+                tickMargin={10}
+                axisLine={false}
+                tickFormatter={(value) => value.slice(0, 3)}
+              />
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent indicator="dashed" />}
+              />
+              <Bar
+                dataKey="incomeCount"
+                fill={chartConfig.incomeCount.color}
+                radius={4}
+              />
+              <Bar
+                dataKey="outcomeCount"
+                fill={chartConfig.outcomeCount.color}
+                radius={4}
+              />
+            </BarChart>
+          )}
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="leading-none text-muted-foreground">
-          Showing total sales and revenue for the current year
-        </div>
+        {data.length === 0 ? (
+          <div className="leading-none text-muted-foreground">
+            Nenhuma receita ou despesa registrada para o período.
+          </div>
+        ) : isIncomeHigher ? (
+          <div className="flex gap-2 font-medium leading-none text-green-600">
+            <TrendingUp className="h-4 w-4" />
+            Você teve mais receitas do que despesas este ano. Diferença de R${" "}
+            {difference.toFixed(2)}.
+          </div>
+        ) : (
+          <div className="flex gap-2 font-medium leading-none text-red-600">
+            <TrendingDown className="h-4 w-4" />
+            Você teve mais despesas do que receitas este ano. Diferença de R${" "}
+            {difference.toFixed(2)}.
+          </div>
+        )}
+        {data.length > 0 && (
+          <div className="leading-none text-muted-foreground">
+            Mostrando o resumo de receitas e despesas do período analisado.
+          </div>
+        )}
       </CardFooter>
     </Card>
   );

@@ -8,7 +8,7 @@ export const getCustomers = async () => {
   const session = await getServerSession(authOptions);
 
   const user = await db.user.findUnique({
-    where: { email: session?.user?.email },
+    where: { email: session?.user.email },
   });
 
   const company = await db.company.findUnique({
@@ -21,14 +21,9 @@ export const getCustomers = async () => {
     throw new Error("Empresa não encontrada!");
   }
 
-  try {
-    const customers = await db.customer.findMany({
-      where: { companyId: company.id },
-    });
+  const customers = await db.customer.findMany({
+    where: { companyId: company.id },
+  });
 
-    return customers;
-  } catch (error) {
-    console.error("Erro ao buscar clientes:", error);
-    throw new Error("Erro ao buscar clientes no banco de dados.");
-  }
+  return customers;
 };

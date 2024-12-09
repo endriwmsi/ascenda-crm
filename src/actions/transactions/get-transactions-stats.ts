@@ -77,25 +77,20 @@ export const getTransactionStats = async () => {
     transactions.filter((t) => t.date >= lastYearStart && t.date < startOfYear),
   );
 
-  // Função para calcular a mudança percentual
-  const formatPercentageChange = (
-    current: number,
-    previous: number,
-  ): string => {
-    if (previous === 0) return "0%";
+  const weeklyChange =
+    lastWeekRevenue > 0
+      ? `${Math.round(((weeklyRevenue - lastWeekRevenue) / lastWeekRevenue) * 100)}%`
+      : "0%";
 
-    const change = ((current - previous) / previous) * 100;
-    const roundedChange = Math.round(change);
+  const monthlyChange =
+    lastMonthRevenue > 0
+      ? `${Math.round(((monthlyRevenue - lastMonthRevenue) / lastMonthRevenue) * 100)}%`
+      : "0%";
 
-    return `${roundedChange > 0 ? "+" : ""}${roundedChange}%`;
-  };
-
-  const weeklyChange = formatPercentageChange(weeklyRevenue, lastWeekRevenue);
-  const monthlyChange = formatPercentageChange(
-    monthlyRevenue,
-    lastMonthRevenue,
-  );
-  const yearlyChange = formatPercentageChange(yearlyRevenue, lastYearRevenue);
+  const yearlyChange =
+    lastYearRevenue > 0
+      ? `${Math.round(((yearlyRevenue - lastYearRevenue) / lastYearRevenue) * 100)}%`
+      : "0%";
 
   return {
     weeklyRevenue,

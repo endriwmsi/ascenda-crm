@@ -29,12 +29,12 @@ const CustomersPage = async () => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Leads</BreadcrumbPage>
+            <BreadcrumbPage>Clientes</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
 
-      <div className="flex h-screen flex-1 flex-col space-y-2 overflow-y-hidden py-4 sm:h-fit">
+      <div className="flex flex-1 flex-col space-y-2 overflow-y-hidden py-4 sm:h-fit">
         <LeadsComponent />
       </div>
 

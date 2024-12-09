@@ -1,14 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { PenIcon, XIcon } from "lucide-react";
+import { PenBoxIcon, XIcon } from "lucide-react";
 import { useState } from "react";
-import { Transaction } from "./columns";
 import { toast } from "@/hooks/use-toast";
 import { deleteTransaction } from "@/actions/transactions/delete-transaction";
-import DeleteTransactionModal from "../modals/delete-transaction-modal";
-import EditTransactionModal from "../modals/edit-transaction-modal";
 import UpdateTransactionsForm from "../forms/update-transactions-form";
+import Modal from "@/components/ui/modal";
+import { Transaction } from "@/app/types/constants";
 
 type ActionsCellProps = {
   transaction: Transaction;
@@ -19,17 +18,22 @@ const ActionsCell = ({ transaction }: ActionsCellProps) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   return (
-    <div className="flex items-center gap-2">
-      <Button className="bg-blue-600" onClick={() => setIsEditModalOpen(true)}>
-        <PenIcon size={14} />
+    <div className="flex items-center justify-center gap-2">
+      <Button
+        className="bg-blue-200 text-blue-500 hover:bg-blue-500 hover:text-white"
+        onClick={() => setIsEditModalOpen(true)}
+      >
+        <PenBoxIcon size={18} />
       </Button>
 
-      <Button variant="destructive" onClick={() => setIsDeleteModalOpen(true)}>
-        <XIcon size={14} />
+      <Button
+        className="bg-red-200 text-red-500 hover:bg-red-500 hover:text-white"
+        onClick={() => setIsDeleteModalOpen(true)}
+      >
+        <XIcon size={18} />
       </Button>
 
-      {/* Modal de Edição */}
-      <EditTransactionModal
+      <Modal
         title="Editar Transação"
         description="Modifique os campos abaixo para alterar uma transação."
         isOpen={isEditModalOpen}
@@ -39,10 +43,9 @@ const ActionsCell = ({ transaction }: ActionsCellProps) => {
           onSave={() => setIsEditModalOpen(false)}
           transaction={transaction}
         />
-      </EditTransactionModal>
+      </Modal>
 
-      {/* Modal de Exclusão */}
-      <DeleteTransactionModal
+      <Modal
         title="Deletar Transação"
         description="Você tem certeza que deseja deletar esta transação?"
         isOpen={isDeleteModalOpen}
@@ -65,7 +68,7 @@ const ActionsCell = ({ transaction }: ActionsCellProps) => {
             Deletar
           </Button>
         </div>
-      </DeleteTransactionModal>
+      </Modal>
     </div>
   );
 };

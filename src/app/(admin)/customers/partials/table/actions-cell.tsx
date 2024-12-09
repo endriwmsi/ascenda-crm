@@ -2,13 +2,12 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { PenIcon, XIcon } from "lucide-react";
-import { Customer } from "./columns";
+import { PenBoxIcon, XIcon } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { deleteCustomer } from "@/actions/customers/delete-customer";
-import DeleteCustomerModal from "../modals/delete-customer-modal";
-import EditCustomerModal from "../modals/edit-customer-modal";
 import UpdateCustomerForm from "../forms/update-customer-form";
+import Modal from "@/components/ui/modal";
+import { Customer } from "@/app/types/constants";
 
 type ActionsCellProps = {
   customer: Customer;
@@ -19,19 +18,25 @@ const ActionsCell = ({ customer }: ActionsCellProps) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   return (
-    <div className="flex items-center gap-2">
-      <Button className="bg-blue-600" onClick={() => setIsEditModalOpen(true)}>
-        <PenIcon size={14} />
+    <div className="flex items-center justify-center gap-2">
+      <Button
+        className="bg-blue-200 text-blue-500 hover:bg-blue-500 hover:text-white"
+        onClick={() => setIsEditModalOpen(true)}
+      >
+        <PenBoxIcon size={18} />
       </Button>
 
-      <Button variant="destructive" onClick={() => setIsDeleteModalOpen(true)}>
-        <XIcon size={14} />
+      <Button
+        className="bg-red-200 text-red-500 hover:bg-red-500 hover:text-white"
+        onClick={() => setIsDeleteModalOpen(true)}
+      >
+        <XIcon size={18} />
       </Button>
 
       {/* Modal de Edição */}
-      <EditCustomerModal
-        title="Editar Transação"
-        description="Modifique os campos abaixo para alterar uma transação."
+      <Modal
+        title="Editar cliente"
+        description="Modifique os campos abaixo para alterar um cliente."
         isOpen={isEditModalOpen}
         setIsOpen={setIsEditModalOpen}
       >
@@ -39,9 +44,9 @@ const ActionsCell = ({ customer }: ActionsCellProps) => {
           onSave={() => setIsEditModalOpen(false)}
           customer={customer}
         />
-      </EditCustomerModal>
+      </Modal>
 
-      <DeleteCustomerModal
+      <Modal
         title="Deletar cliente"
         description="Você tem certeza que deseja deletar este cliente?"
         isOpen={isDeleteModalOpen}
@@ -64,7 +69,7 @@ const ActionsCell = ({ customer }: ActionsCellProps) => {
             Deletar
           </Button>
         </div>
-      </DeleteCustomerModal>
+      </Modal>
     </div>
   );
 };
