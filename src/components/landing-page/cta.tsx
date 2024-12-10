@@ -1,9 +1,28 @@
+"use client";
+
+import { useTheme } from "next-themes";
 import { Button } from "../ui/button";
 import Image from "next/image";
-import Stripes from "@../../../public/images/stripes-dark.svg";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Cta() {
+  const { resolvedTheme } = useTheme();
+
+  const [currentTheme, setCurrentTheme] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (resolvedTheme) {
+      setCurrentTheme(resolvedTheme);
+    }
+  }, [resolvedTheme]);
+
+  // Garantir que a faixa seja exibida corretamente apenas após o tema ser resolvido
+  const stripesImage =
+    currentTheme === "dark"
+      ? "/images/stripes.svg"
+      : "/images/stripes-dark.svg";
+
   return (
     <section>
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -16,7 +35,7 @@ export default function Cta() {
             className="absolute bottom-0 left-1/2 -z-10 -translate-x-1/2 translate-y-1/2"
             aria-hidden="true"
           >
-            <div className="h-56 w-[480px] rounded-full border-[20px] border-blue-500 blur-3xl" />
+            <div className="h-56 w-[480px] rounded-full border-[20px] border-zinc-500 blur-3xl" />
           </div>
           {/* Stripes illustration */}
           <div
@@ -25,7 +44,7 @@ export default function Cta() {
           >
             <Image
               className="max-w-none"
-              src={Stripes}
+              src={stripesImage}
               width={768}
               height={432}
               alt="Stripes"
