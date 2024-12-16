@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Markdown } from "@/components/ui/markdown";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { useChat } from "ai/react";
@@ -79,7 +80,7 @@ const GrowtAdvisorPage = () => {
                       : "bg-gray-200 text-black"
                   }`}
                 >
-                  {message.content}
+                  <Markdown>{message.content}</Markdown>
                 </div>
 
                 {message.role === "user" && (
